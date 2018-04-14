@@ -3,12 +3,16 @@
   "displayName": "Emulate",
   "description": "Emulate Android and iOS easily!",
   "version": "0.0.1",
-  "publisher": "michielsdiemas",
+  "publisher": "diemasmichiels",
   "engines": {
     "vscode": "^1.22.0"
   },
-  "categories": ["Other"],
-  "activationEvents": ["onCommand:extension.emulate"],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.emulate"
+  ],
   "main": "./src/extension",
   "contributes": {
     "commands": [
@@ -23,7 +27,10 @@
     "test": "node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "vscode": "^1.1.6",
-    "eslint": "^4.11.0"
+    "eslint": "^4.11.0",
+    "vscode": "^1.1.6"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2"
   }
 }

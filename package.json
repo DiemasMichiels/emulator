@@ -3,6 +3,7 @@
   "displayName": "Emulate",
   "description": "Emulate Android and iOS easily!",
   "version": "0.0.1",
+  "preview": true,
   "publisher": "diemasmichiels",
   "author": {
     "name": "Diemas Michiels"
@@ -11,6 +12,14 @@
     "vscode": "^1.22.0"
   },
   "categories": ["Debuggers", "Other"],
+  "keywords": [
+    "Emulator",
+    "Emulate",
+    "Android",
+    "iOS",
+    "Simulator",
+    "Simulate"
+  ],
   "activationEvents": ["onCommand:extension.emulate"],
   "main": "./src/extension",
   "contributes": {
@@ -34,5 +43,10 @@
   "dependencies": {
     "child_process": "^1.0.2"
   },
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DiemasMichiels/Emulate.git"
+  },
+  "homepage": "https://github.com/DiemasMichiels/Emulate"
 }

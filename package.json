@@ -4,7 +4,7 @@
   "description": "Emulate Android and iOS easily!",
   "version": "0.0.1",
   "preview": true,
-  "publisher": "diemasmichiels",
+  "publisher": "DiemasMichiels",
   "author": {
     "name": "Diemas Michiels"
   },
@@ -12,14 +12,7 @@
     "vscode": "^1.22.0"
   },
   "categories": ["Debuggers", "Other"],
-  "keywords": [
-    "Emulator",
-    "Emulate",
-    "Android",
-    "iOS",
-    "Simulator",
-    "Simulate"
-  ],
+  "keywords": ["Emulator", "Emulate", "Android", "iOS", "Simulator"],
   "activationEvents": ["onCommand:extension.emulate"],
   "main": "./src/extension",
   "contributes": {
@@ -31,8 +24,6 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "node ./node_modules/vscode/bin/test"
   },

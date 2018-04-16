@@ -7,5 +7,6 @@ exports.getAndroidEmulators = async () => {
 };
 
 exports.runAndroidEmulator = async emulator => {
-  await runCmd(ANDROID_COMMANDS.RUN_AVD + emulator);
+  let { stdout } = await runCmd(ANDROID_COMMANDS.RUN_AVD + emulator);
+  return stdout;
 };

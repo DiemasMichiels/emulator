@@ -6,7 +6,10 @@ A small Visual Studio Code extention to run Android or iOS Simulators in a click
 ## Features
 
 Select and run your emulator from Visual Studio Code.
-Currently only works for Android emulators.
+
+Open command pallete `Cmd-Shift-P` -> Type `Emulate`
+
+![Image of Emulate](https://raw.githubusercontent.com/DiemasMichiels/Emulate/master/images/emulate.gif)
 
 ## Requirements
 
@@ -20,10 +23,3 @@ Add Android Studio emulator scripts to you path:
 ### Xcode
 
 To run iOS emulators Xcode is required.
-
-## Docs
-
-### Android
-
-For Android documentation for the different commands:
-https://developer.android.com/studio/run/emulator-commandline.html

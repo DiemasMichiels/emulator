@@ -5,7 +5,10 @@ const { getIOSSimulators, runIOSSimulator } = require('./utils/ios');
 
 exports.activate = context => {
   let disposable = commands.registerCommand('extension.emulate', () => {
-    window.showQuickPick([OS_PICKER.ANDROID, OS_PICKER.IOS]).then(response => {
+    const pickerList = [OS_PICKER.ANDROID]
+    process.platform === 'darwin' && pickerList.push(OS_PICKER.IOS)
+
+    window.showQuickPick(pickerList).then(response => {
       switch (response) {
         case OS_PICKER.ANDROID:
           androidPick();

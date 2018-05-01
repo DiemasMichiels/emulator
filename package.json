@@ -2,7 +2,7 @@
   "name": "emulator",
   "displayName": "Emulator",
   "description": "Run Android emulator and iOS simulator easily from VScode!",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "preview": true,
   "publisher": "DiemasMichiels",
   "author": {

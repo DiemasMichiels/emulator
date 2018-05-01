@@ -1,7 +1,7 @@
 {
-  "name": "emulate",
-  "displayName": "Emulate",
-  "description": "Emulate Android and iOS easily!",
+  "name": "emulator",
+  "displayName": "Emulator",
+  "description": "Run Android emulator and iOS simulator easily from VScode!",
   "version": "0.0.3",
   "preview": true,
   "publisher": "DiemasMichiels",
@@ -11,15 +11,25 @@
   "engines": {
     "vscode": "^1.22.0"
   },
-  "categories": ["Debuggers", "Other"],
-  "keywords": ["Emulator", "Emulate", "Android", "iOS", "Simulator"],
-  "activationEvents": ["onCommand:extension.emulate"],
+  "categories": [
+    "Debuggers",
+    "Other"
+  ],
+  "keywords": [
+    "Emulator",
+    "Android",
+    "iOS",
+    "Simulator"
+  ],
+  "activationEvents": [
+    "onCommand:extension.emulator"
+  ],
   "main": "./src/extension",
   "contributes": {
     "commands": [
       {
-        "command": "extension.emulate",
-        "title": "Emulate"
+        "command": "extension.emulator",
+        "title": "Emulator"
       }
     ]
   },
@@ -37,7 +47,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DiemasMichiels/Emulate.git"
+    "url": "https://github.com/DiemasMichiels/Emulator.git"
   },
-  "homepage": "https://github.com/DiemasMichiels/Emulate"
+  "homepage": "https://github.com/DiemasMichiels/Emulator"
 }

@@ -4,7 +4,7 @@ const { getAndroidEmulators, runAndroidEmulator } = require('./utils/android');
 const { getIOSSimulators, runIOSSimulator } = require('./utils/ios');
 
 exports.activate = context => {
-  let disposable = commands.registerCommand('extension.emulate', () => {
+  let disposable = commands.registerCommand('extension.emulator', () => {
     const pickerList = [OS_PICKER.ANDROID]
     process.platform === 'darwin' && pickerList.push(OS_PICKER.IOS)
 
@@ -64,12 +64,12 @@ const iOSPick = () => {
 
 const showSuccessMessage = () => {
   window.showInformationMessage(
-    'Emulate: Emulator is booting up ...'
+    'Emulator is booting up ...'
   );
 }
 
 const showErrorMessage = () => {
   window.showErrorMessage(
-    'Emulate: Emulator failed to boot.'
+    'Emulator failed to boot.'
   );
 }

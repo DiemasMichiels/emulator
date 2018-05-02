@@ -1,4 +1,4 @@
-# Emulator
+# Android iOS Emulator
 
 A small Visual Studio Code extention to run Android or iOS Simulators in a click.
 

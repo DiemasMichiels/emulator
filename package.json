@@ -1,6 +1,6 @@
 {
-  "name": "emulator",
-  "displayName": "Emulator",
+  "name": "emulate",
+  "displayName": "Android iOS Emulator",
   "description": "Run Android emulator and iOS simulator easily from VScode!",
   "version": "0.0.4",
   "preview": true,

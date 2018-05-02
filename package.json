@@ -8,6 +8,7 @@
   "author": {
     "name": "Diemas Michiels"
   },
+	"icon": "images/ic_emulator.png",
   "engines": {
     "vscode": "^1.22.0"
   },
@@ -49,5 +50,8 @@
     "type": "git",
     "url": "https://github.com/DiemasMichiels/Emulator.git"
   },
-  "homepage": "https://github.com/DiemasMichiels/Emulator"
+  "homepage": "https://github.com/DiemasMichiels/Emulator",
+	"bugs": {
+		"url": "https://github.com/DiemasMichiels/Emulator/issues"
+	}
 }

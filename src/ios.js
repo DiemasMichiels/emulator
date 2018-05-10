@@ -4,19 +4,24 @@ const { showSuccessMessage, showErrorMessage } = require('./utils/message');
 const { IOS_COMMANDS } = require('./constants');
 
 // Get iOS devices and pick one
-exports.iOSPick = () => {
-  const simulators = getIOSSimulators();
+exports.iOSPick = async () => {
+  const simulators = await getIOSSimulators();
   if (simulators) {
-    window.showQuickPick(simulators).then(response => {
+    const formattedSimulators = simulators.map(s => ({ label: s.replace(/\[(.*)/g, ''), simulator: s }))
+    window.showQuickPick(formattedSimulators).then(response => {
       if (response) {
-        const ranSimulator = runIOSSimulator(response);
+        const ranSimulator = runIOSSimulator(response.simulator);
         if (ranSimulator) {
           showSuccessMessage();
         } else {
           showErrorMessage();
         }
+      } else {
+        showErrorMessage();
       }
     });
+  } else {
+    showErrorMessage();
   }
 }
 

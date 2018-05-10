@@ -1,7 +1,7 @@
 const { window, commands } = require('vscode');
 const { OS_PICKER } = require('./constants');
-const { getAndroidEmulators, runAndroidEmulator } = require('./utils/android');
-const { getIOSSimulators, runIOSSimulator } = require('./utils/ios');
+const { androidPick } = require('./android');
+const { iOSPick } = require('./ios');
 
 exports.activate = context => {
   let disposable = commands.registerCommand('extension.emulator', () => {
@@ -27,49 +27,3 @@ exports.activate = context => {
 };
 
 exports.deactivate = () => {};
-
-// Get Android devices and pick one
-const androidPick = () => {
-  const emulators = getAndroidEmulators();
-  if (emulators) {
-    window.showQuickPick(emulators).then(response => {
-      if (response) {
-        const ranEmulator = runAndroidEmulator(response);
-        if (ranEmulator) {
-          showSuccessMessage();
-        } else {
-          showErrorMessage();
-        }
-      }
-    });
-  }
-}
-
-// Get iOS devices and pick one
-const iOSPick = () => {
-  const simulators = getIOSSimulators();
-  if (simulators) {
-    window.showQuickPick(simulators).then(response => {
-      if (response) {
-        const ranSimulator = runIOSSimulator(response);
-        if (ranSimulator) {
-          showSuccessMessage();
-        } else {
-          showErrorMessage();
-        }
-      }
-    });
-  }
-}
-
-const showSuccessMessage = () => {
-  window.showInformationMessage(
-    'Emulator is booting up ...'
-  );
-}
-
-const showErrorMessage = () => {
-  window.showErrorMessage(
-    'Emulator failed to boot.'
-  );
-}

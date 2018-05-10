@@ -12,9 +12,19 @@
   "engines": {
     "vscode": "^1.22.0"
   },
-  "categories": ["Debuggers", "Other"],
-  "keywords": ["Emulator", "Android", "iOS", "Simulator"],
-  "activationEvents": ["onCommand:extension.emulator"],
+  "categories": [
+    "Debuggers",
+    "Other"
+  ],
+  "keywords": [
+    "Emulator",
+    "Android",
+    "iOS",
+    "Simulator"
+  ],
+  "activationEvents": [
+    "onCommand:extension.emulator"
+  ],
   "main": "./src/extension",
   "contributes": {
     "commands": [

@@ -18,8 +18,8 @@ Open command pallete `Cmd-Shift-P` -> Type `Emulator`
 
 To run Android emulators you need to have Android studio and already created the Android Virtual Devices.
 
-Add Android Studio emulator scripts to you path:
-`PATH="$PATH:$HOME/Library/Android/sdk/emulator"`
+Add the Android Studio emulator script to your settings in Visual Studio Code:
+`"emulator.emulatorPath": "~/Library/Android/sdk/tools/emulator"`
 
 ### Xcode
 

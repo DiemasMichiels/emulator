@@ -1,4 +1,5 @@
 const { window } = require('vscode');
+const { emulatorPath } = require('./config')
 const { runCmd } = require('./utils/commands');
 const { showSuccessMessage, showErrorMessage } = require('./utils/message');
 const { ANDROID_COMMANDS } = require('./constants');
@@ -21,11 +22,12 @@ exports.androidPick = () => {
 }
 
 const getAndroidEmulators = async () => {
-  let { stdout } = await runCmd(ANDROID_COMMANDS.LIST_AVDS);
+  console.log(`${emulatorPath()}${ANDROID_COMMANDS.LIST_AVDS}`)
+  let { stdout } = await runCmd(`${emulatorPath()}${ANDROID_COMMANDS.LIST_AVDS}`);
   return stdout && stdout.trim().split('\n') || false;
 };
 
 const runAndroidEmulator = async emulator => {
-  let { stdout } = await runCmd(ANDROID_COMMANDS.RUN_AVD + emulator);
+  let { stdout } = await runCmd(`${emulatorPath()}${ANDROID_COMMANDS.RUN_AVD}${emulator}`);
   return stdout || false;
 };

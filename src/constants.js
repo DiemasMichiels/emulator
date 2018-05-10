@@ -4,8 +4,8 @@ exports.OS_PICKER = {
 };
 
 exports.ANDROID_COMMANDS = {
-  LIST_AVDS: 'emulator -list-avds',
-  RUN_AVD: 'emulator -avd '
+  LIST_AVDS: ' -list-avds',
+  RUN_AVD: ' -avd '
 };
 
 exports.IOS_COMMANDS = {

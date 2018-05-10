@@ -47,9 +47,9 @@ const androidPick = () => {
 
 // Get iOS devices and pick one
 const iOSPick = () => {
-  const simulator = getIOSSimulators();
-  if (simulator) {
-    window.showQuickPick(simulator).then(response => {
+  const simulators = getIOSSimulators();
+  if (simulators) {
+    window.showQuickPick(simulators).then(response => {
       if (response) {
         const ranSimulator = runIOSSimulator(response);
         if (ranSimulator) {

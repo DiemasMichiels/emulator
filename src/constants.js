@@ -1,5 +1,5 @@
 exports.OS_PICKER = {
-  ANDROID: 'View Android simulators',
+  ANDROID: 'View Android emulators',
   IOS: 'View iOS simulators'
 };
 

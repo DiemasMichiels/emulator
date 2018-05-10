@@ -3,10 +3,10 @@ const { ANDROID_COMMANDS } = require('../constants');
 
 exports.getAndroidEmulators = async () => {
   let { stdout } = await runCmd(ANDROID_COMMANDS.LIST_AVDS);
-  return stdout.trim().split('\n');
+  return stdout && stdout.trim().split('\n') || false;
 };
 
 exports.runAndroidEmulator = async emulator => {
   let { stdout } = await runCmd(ANDROID_COMMANDS.RUN_AVD + emulator);
-  return stdout;
+  return stdout || false;
 };

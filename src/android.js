@@ -5,24 +5,28 @@ const { showSuccessMessage, showErrorMessage } = require('./utils/message');
 const { ANDROID_COMMANDS } = require('./constants');
 
 // Get Android devices and pick one
-exports.androidPick = () => {
-  const emulators = getAndroidEmulators();
+exports.androidPick = async () => {
+  const emulators = await getAndroidEmulators();
   if (emulators) {
-    window.showQuickPick(emulators).then(response => {
+    const formattedEmulators = emulators.map(e => ({ label: e.replace(/_/g, ' '), emulator: e }))
+    window.showQuickPick(formattedEmulators).then(response => {
       if (response) {
-        const ranEmulator = runAndroidEmulator(response);
+        const ranEmulator = runAndroidEmulator(response.emulator);
         if (ranEmulator) {
           showSuccessMessage();
         } else {
           showErrorMessage();
         }
+      } else {
+        showErrorMessage();
       }
     });
+  } else {
+    showErrorMessage();
   }
 }
 
 const getAndroidEmulators = async () => {
-  console.log(`${emulatorPath()}${ANDROID_COMMANDS.LIST_AVDS}`)
   let { stdout } = await runCmd(`${emulatorPath()}${ANDROID_COMMANDS.LIST_AVDS}`);
   return stdout && stdout.trim().split('\n') || false;
 };

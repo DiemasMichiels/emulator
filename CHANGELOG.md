@@ -1,5 +1,8 @@
+# 0.0.5 - preview
+- Much nicer emulator names to pick from
+- Add android emulator path to visual studio code settings
 # 0.0.4 - preview
-- Rename emulate to emulator
+- Rename emulate to Android iOS Emulator
 # 0.0.3 - preview
 - Support other operation systems than mac
 # 0.0.2 - preview

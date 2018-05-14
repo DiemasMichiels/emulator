@@ -1,3 +1,5 @@
+# 0.0.6 - preview
+- Add keybindings
 # 0.0.5 - preview
 - Much nicer emulator names to pick from
 - Add android emulator path to visual studio code settings

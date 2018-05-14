@@ -2,7 +2,7 @@
   "name": "emulate",
   "displayName": "Android iOS Emulator",
   "description": "Run Android emulator and iOS simulator easily from VScode!",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "preview": true,
   "publisher": "DiemasMichiels",
   "author": {
@@ -31,6 +31,13 @@
       {
         "command": "extension.emulator",
         "title": "Emulator"
+      }
+    ],
+    "keybindings": [
+     {
+        "key": "ctrl+alt+e",
+        "mac": "cmd+alt+e",
+        "command": "extension.emulator"
       }
     ],
     "configuration": {

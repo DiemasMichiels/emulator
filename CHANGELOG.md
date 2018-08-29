@@ -1,3 +1,6 @@
+# 0.0.7
+- Add right top icon to start the emulator
+- Remove bad error messaging
 # 0.0.6 - preview
 - Add keybindings
 # 0.0.5 - preview

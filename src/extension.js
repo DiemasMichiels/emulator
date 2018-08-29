@@ -4,7 +4,7 @@ const { androidPick } = require('./android');
 const { iOSPick } = require('./ios');
 
 exports.activate = context => {
-  let disposable = commands.registerCommand('extension.emulator', () => {
+  let disposable = commands.registerCommand('emulator.start', () => {
     const pickerList = [OS_PICKER.ANDROID]
     process.platform === 'darwin' && pickerList.push(OS_PICKER.IOS)
 
@@ -15,9 +15,6 @@ exports.activate = context => {
           break;
         case OS_PICKER.IOS:
           iOSPick();
-          break;
-        default:
-          window.showErrorMessage('Failed to select OS version.')
           break;
       }
     });

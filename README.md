@@ -2,7 +2,7 @@
 
 A small Visual Studio Code extention to run Android or iOS Simulators in a click.
 
-**Running iOS simulators only works on Mac!**
+**Running iOS simulators only works on Mac with Xcode!**
 
 ## Features
 
@@ -18,8 +18,9 @@ Open command pallete `Cmd-Shift-P` -> Type `Emulator`
 
 To run Android emulators you need to have Android studio and already created the Android Virtual Devices.
 
-Add the Android Studio emulator script to your settings in Visual Studio Code:
-`"emulator.emulatorPath": "~/Library/Android/sdk/tools/emulator"`
+Add the Android Studio emulator script to your settings in Visual Studio Code:  
+&nbsp;&nbsp;&nbsp;&nbsp;Mac: `"emulator.emulatorPath": "~/Library/Android/sdk/tools/emulator"`  
+&nbsp;&nbsp;&nbsp;&nbsp;Windows: `"emulator.emulatorPath": "<your android home>\\Sdk\\emulator\\emulator.exe"`
 
 ### Xcode
 

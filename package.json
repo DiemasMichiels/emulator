@@ -2,8 +2,7 @@
   "name": "emulate",
   "displayName": "Android iOS Emulator",
   "description": "Run Android emulator and iOS simulator easily from VScode!",
-  "version": "0.0.6",
-  "preview": true,
+  "version": "0.0.7",
   "publisher": "DiemasMichiels",
   "author": {
     "name": "Diemas Michiels"
@@ -23,23 +22,36 @@
     "Simulator"
   ],
   "activationEvents": [
-    "onCommand:extension.emulator"
+    "onCommand:emulator.start"
   ],
   "main": "./src/extension",
   "contributes": {
     "commands": [
       {
-        "command": "extension.emulator",
-        "title": "Emulator"
+        "command": "emulator.start",
+        "title": "Emulator",
+        "icon": {
+          "light": "./images/EmulatorRightTopAction_16x.svg",
+          "dark": "./images/EmulatorRightTopAction_16x_dark.svg"
+        }
       }
     ],
     "keybindings": [
      {
         "key": "ctrl+alt+e",
         "mac": "cmd+alt+e",
-        "command": "extension.emulator"
+        "command": "emulator.start"
       }
     ],
+    "menus": {
+      "editor/title": [
+				{
+					"command": "emulator.start",
+					"when": "editorFocus",
+					"group": "navigation"
+        }
+      ]
+    },
     "configuration": {
       "title": "Emulator Configuration",
       "properties": {

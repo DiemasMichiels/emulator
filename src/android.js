@@ -17,12 +17,8 @@ exports.androidPick = async () => {
         } else {
           showErrorMessage();
         }
-      } else {
-        showErrorMessage();
       }
     });
-  } else {
-    showErrorMessage();
   }
 }
 

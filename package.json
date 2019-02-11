@@ -37,7 +37,7 @@
       }
     ],
     "keybindings": [
-     {
+      {
         "key": "ctrl+alt+e",
         "mac": "cmd+alt+e",
         "command": "emulator.start"
@@ -45,10 +45,10 @@
     ],
     "menus": {
       "editor/title": [
-				{
-					"command": "emulator.start",
-					"when": "editorFocus",
-					"group": "navigation"
+        {
+          "command": "emulator.start",
+          "when": "editorFocus",
+          "group": "navigation"
         }
       ]
     },
@@ -57,8 +57,8 @@
       "properties": {
         "emulator.emulatorPath": {
           "type": "string",
-          "default": "~/Library/Android/sdk/tools/emulator",
-          "description": "The absolute path of the Android emulator script.",
+          "default": "~/Library/Android/sdk/emulator",
+          "description": "The absolute path of the Android directory containing the emulator script.",
           "scope": "application"
         }
       }

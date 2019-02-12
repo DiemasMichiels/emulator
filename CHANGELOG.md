@@ -1,3 +1,9 @@
+# 1.0.0
+
+- Finally some decent error reporting
+- Bump packages
+- Support x86 emulators on mac thanks to antonholmbergmi - issue 12
+
 # 0.0.7
 
 - Add right top icon to start the emulator

@@ -69,11 +69,11 @@
     "test": "node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "eslint": "^4.11.0",
-    "vscode": "^1.1.6"
+    "eslint": "5.13.0",
+    "vscode": "1.1.29"
   },
   "dependencies": {
-    "child_process": "^1.0.2"
+    "child_process": "1.0.2"
   },
   "license": "SEE LICENSE IN LICENSE",
   "repository": {

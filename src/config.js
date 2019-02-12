@@ -7,7 +7,7 @@ const config = () => {
 
 exports.emulatorPath = () => {
   const path = config().get('emulatorPath');
-  if (process.platform.includes('win') && path.includes('/')) {
+  if (process.platform.startsWith('win') && path.includes('/')) {
     showErrorMessage(
       `Make sure your windows path is set correctly! Example: C:\\Users\\Me\\AppData\\Local\\Android\\Sdk\\emulator`
     );

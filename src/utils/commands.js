@@ -1,4 +1,4 @@
-const { exec } = require('child_process');
+const exec = require("child_process").exec;
 
 exports.runCmd = async (cmd, options) => {
   return new Promise((resolve, reject) => {
@@ -6,7 +6,7 @@ exports.runCmd = async (cmd, options) => {
       if (err) {
         reject(err);
       } else {
-        resolve({ stdout, stderr });
+        resolve(stdout);
       }
     });
   });

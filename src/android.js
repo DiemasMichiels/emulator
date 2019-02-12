@@ -13,13 +13,11 @@ exports.androidPick = async () => {
       label: e.replace(/_/g, " "),
       emulator: e
     }));
-    window.showQuickPick(formattedEmulators).then(response => {
+    window.showQuickPick(formattedEmulators).then(async response => {
       if (response) {
-        const ranEmulator = runAndroidEmulator(response.emulator);
+        const ranEmulator = await runAndroidEmulator(response.emulator);
         if (ranEmulator) {
           showSuccessMessage("Emulator is booting up ...");
-        } else {
-          showErrorMessage("Emulator failed to boot.");
         }
       }
     });
@@ -27,30 +25,42 @@ exports.androidPick = async () => {
 };
 
 const getAndroidEmulators = async () => {
-  const command = `${path.join(emulatorPath(), ANDROID.PATH)}${
-    ANDROID_COMMANDS.LIST_AVDS
-  }`;
-
   try {
-    const res = await runCmd(command, {
-      cwd: emulatorPath().replace("~", process.env.HOME)
-    });
+    const res = await runCmd(`${path.join(emulatorPath(), ANDROID.PATH)}${
+      ANDROID_COMMANDS.LIST_AVDS
+      }`, {
+        cwd: emulatorPath().replace("~", process.env.HOME)
+      });
 
-    return (res && res.trim().split("\n")) || false;
-  } catch (e) {
+    if (res) {
+      return res.trim().split("\n")
+    }
     showErrorMessage(
-      `Something went wrong fetching you Android emulators! Make sure your path is correct. This command should work in your terminal: ${command}`
+      `There are no Android emulators found, please check if you have any emulators installed.`
     );
+    return false;
+  } catch (e) {
+    showErrorMessage(e.toString());
+    showErrorMessage(
+      `Something went wrong fetching you Android emulators! Make sure your path is correct.`
+    );
+    return false;
   }
-  return false;
 };
 
 const runAndroidEmulator = async emulator => {
-  let { stdout } = await runCmd(
-    `${path.join(emulatorPath(), ANDROID.PATH)}${
+  try {
+    const res = await runCmd(`${path.join(emulatorPath(), ANDROID.PATH)}${
       ANDROID_COMMANDS.RUN_AVD
-    }${emulator}`,
-    { cwd: emulatorPath().replace("~", process.env.HOME) }
-  );
-  return stdout || false;
+      }${emulator}`,
+      { cwd: emulatorPath().replace("~", process.env.HOME) }
+    );
+    return res || false;
+  } catch (e) {
+    showErrorMessage(e.toString());
+    showErrorMessage(
+      `Something went wrong running you Android emulator!`
+    );
+    return false
+  }
 };

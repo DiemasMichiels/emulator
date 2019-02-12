@@ -22,6 +22,9 @@ Add the Android Studio emulator script to your settings in Visual Studio Code:
 &nbsp;&nbsp;&nbsp;&nbsp;Mac: `"emulator.emulatorPath": "~/Library/Android/sdk/tools/emulator"`  
 &nbsp;&nbsp;&nbsp;&nbsp;Windows: `"emulator.emulatorPath": "<your android home>\\Sdk\\emulator\\emulator.exe"`
 
+Your visual studio code settings are found here:
+File -> Preferences -> Setting -> User Setting -> Extensions -> Emulator Configuration
+
 ### Xcode
 
 To run iOS emulators Xcode is required.

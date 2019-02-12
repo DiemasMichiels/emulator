@@ -5,8 +5,8 @@ const { iOSPick } = require('./ios');
 
 exports.activate = context => {
   let disposable = commands.registerCommand('emulator.start', () => {
-    const pickerList = [OS_PICKER.ANDROID]
-    process.platform === 'darwin' && pickerList.push(OS_PICKER.IOS)
+    const pickerList = [OS_PICKER.ANDROID];
+    process.platform === 'darwin' && pickerList.push(OS_PICKER.IOS);
 
     window.showQuickPick(pickerList).then(response => {
       switch (response) {

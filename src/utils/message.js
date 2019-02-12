@@ -1,4 +1,4 @@
-const { window } = require("vscode");
+const { window } = require('vscode');
 
 exports.showSuccessMessage = message => {
   window.showInformationMessage(message);

@@ -1,21 +1,21 @@
-const { window } = require("vscode");
-const { runCmd } = require("./utils/commands");
-const { showSuccessMessage, showErrorMessage } = require("./utils/message");
-const { IOS_COMMANDS } = require("./constants");
+const { window } = require('vscode');
+const { runCmd } = require('./utils/commands');
+const { showSuccessMessage, showErrorMessage } = require('./utils/message');
+const { IOS_COMMANDS } = require('./constants');
 
 // Get iOS devices and pick one
 exports.iOSPick = async () => {
   const simulators = await getIOSSimulators();
   if (simulators) {
     const formattedSimulators = simulators.map(s => ({
-      label: s.replace(/\[(.*)/g, ""),
+      label: s.replace(/\[(.*)/g, ''),
       simulator: s
     }));
     window.showQuickPick(formattedSimulators).then(async response => {
       if (response) {
         const ranSimulator = await runIOSSimulator(response.simulator);
         if (ranSimulator) {
-          showSuccessMessage("Emulator is booting up ...");
+          showSuccessMessage('Emulator is booting up ...');
         }
       }
     });
@@ -29,9 +29,9 @@ const getIOSSimulators = async () => {
       (res &&
         res
           .trim()
-          .split("\n")
-          .filter(s => s.includes("Simulator"))
-          .map(s => s.replace(/ *\([^)]*\) */g, ""))) ||
+          .split('\n')
+          .filter(s => s.includes('Simulator'))
+          .map(s => s.replace(/ *\([^)]*\) */g, ''))) ||
       false
     );
   } catch (e) {
@@ -46,13 +46,13 @@ const getIOSSimulators = async () => {
 };
 
 const runIOSSimulator = async simulator => {
-  const uuid = simulator.match(/\[(.*?)\]/g)[0].replace(/[\[\]']+/g, "");
+  const uuid = simulator.match(/\[(.*?)\]/g)[0].replace(/[\[\]']+/g, '');
 
   try {
     const res = await runCmd(IOS_COMMANDS.RUN_SIMULATOR + uuid);
     return res || false;
   } catch (e) {
-    if (!e.toString().includes("//instrumentscli0.trace")) {
+    if (!e.toString().includes('//instrumentscli0.trace')) {
       showErrorMessage(e.toString());
       showErrorMessage(
         `Something went wrong running you iOS simulator! Try running this command in your terminal: ${IOS_COMMANDS.RUN_SIMULATOR +

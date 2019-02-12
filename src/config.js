@@ -1,9 +1,9 @@
 const { workspace } = require('vscode');
-const { showErrorMessage } = require("./utils/message");
+const { showErrorMessage } = require('./utils/message');
 
 const config = () => {
-	return workspace.getConfiguration('emulator');
-}
+  return workspace.getConfiguration('emulator');
+};
 
 exports.emulatorPath = () => {
   const path = config().get('emulatorPath');
@@ -15,4 +15,4 @@ exports.emulatorPath = () => {
   } else {
     return path;
   }
-}
+};

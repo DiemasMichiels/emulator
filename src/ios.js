@@ -11,13 +11,11 @@ exports.iOSPick = async () => {
       label: s.replace(/\[(.*)/g, ""),
       simulator: s
     }));
-    window.showQuickPick(formattedSimulators).then(response => {
+    window.showQuickPick(formattedSimulators).then(async response => {
       if (response) {
-        const ranSimulator = runIOSSimulator(response.simulator);
+        const ranSimulator = await runIOSSimulator(response.simulator);
         if (ranSimulator) {
           showSuccessMessage("Emulator is booting up ...");
-        } else {
-          showErrorMessage("Emulator failed to boot.");
         }
       }
     });
@@ -25,20 +23,44 @@ exports.iOSPick = async () => {
 };
 
 const getIOSSimulators = async () => {
-  let { stdout } = await runCmd(IOS_COMMANDS.LIST_SIMULATORS);
-  return (
-    (stdout &&
-      stdout
-        .trim()
-        .split("\n")
-        .filter(s => s.includes("Simulator"))
-        .map(s => s.replace(/ *\([^)]*\) */g, ""))) ||
-    false
-  );
+  try {
+    const res = await runCmd(IOS_COMMANDS.LIST_SIMULATORS);
+    return (
+      (res &&
+        res
+          .trim()
+          .split("\n")
+          .filter(s => s.includes("Simulator"))
+          .map(s => s.replace(/ *\([^)]*\) */g, ""))) ||
+      false
+    );
+  } catch (e) {
+    showErrorMessage(e.toString());
+    showErrorMessage(
+      `Something went wrong fetching you iOS simulators! Make sure you have Xcode installed. Try running this command in your terminal: ${
+        IOS_COMMANDS.LIST_SIMULATORS
+      }`
+    );
+    return false;
+  }
 };
 
 const runIOSSimulator = async simulator => {
   const uuid = simulator.match(/\[(.*?)\]/g)[0].replace(/[\[\]']+/g, "");
-  let { stdout } = await runCmd(IOS_COMMANDS.RUN_SIMULATOR + uuid);
-  return stdout || false;
+
+  try {
+    const res = await runCmd(IOS_COMMANDS.RUN_SIMULATOR + uuid);
+    return res || false;
+  } catch (e) {
+    if (!e.toString().includes("//instrumentscli0.trace")) {
+      showErrorMessage(e.toString());
+      showErrorMessage(
+        `Something went wrong running you iOS simulator! Try running this command in your terminal: ${IOS_COMMANDS.RUN_SIMULATOR +
+          uuid}`
+      );
+      return false;
+    } else {
+      return true;
+    }
+  }
 };

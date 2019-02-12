@@ -25,12 +25,17 @@ exports.androidPick = async () => {
 };
 
 const getAndroidEmulators = async () => {
-  const command = `${path.join(emulatorPath(), ANDROID.PATH)}${
+  const androidPath = emulatorPath();
+  if (!androidPath) {
+    return false;
+  }
+
+  const command = `${path.join(androidPath, ANDROID.PATH)}${
     ANDROID_COMMANDS.LIST_AVDS
-  }`;
+    }`;
   try {
     const res = await runCmd(command, {
-      cwd: emulatorPath().replace("~", process.env.HOME)
+      cwd: androidPath.replace("~", process.env.HOME)
     });
 
     if (res) {
@@ -50,12 +55,17 @@ const getAndroidEmulators = async () => {
 };
 
 const runAndroidEmulator = async emulator => {
-  const command = `${path.join(emulatorPath(), ANDROID.PATH)}${
+  const androidPath = emulatorPath();
+  if (!androidPath) {
+    return false;
+  }
+
+  const command = `${path.join(androidPath, ANDROID.PATH)}${
     ANDROID_COMMANDS.RUN_AVD
-  }${emulator}`;
+    }${emulator}`;
   try {
     const res = await runCmd(command, {
-      cwd: emulatorPath().replace("~", process.env.HOME)
+      cwd: androidPath.replace("~", process.env.HOME)
     });
     return res || false;
   } catch (e) {
@@ -65,4 +75,4 @@ const runAndroidEmulator = async emulator => {
     );
     return false;
   }
-};
+}

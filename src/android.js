@@ -25,15 +25,16 @@ exports.androidPick = async () => {
 };
 
 const getAndroidEmulators = async () => {
+  const command = `${path.join(emulatorPath(), ANDROID.PATH)}${
+    ANDROID_COMMANDS.LIST_AVDS
+  }`;
   try {
-    const res = await runCmd(`${path.join(emulatorPath(), ANDROID.PATH)}${
-      ANDROID_COMMANDS.LIST_AVDS
-      }`, {
-        cwd: emulatorPath().replace("~", process.env.HOME)
-      });
+    const res = await runCmd(command, {
+      cwd: emulatorPath().replace("~", process.env.HOME)
+    });
 
     if (res) {
-      return res.trim().split("\n")
+      return res.trim().split("\n");
     }
     showErrorMessage(
       `There are no Android emulators found, please check if you have any emulators installed.`
@@ -42,25 +43,26 @@ const getAndroidEmulators = async () => {
   } catch (e) {
     showErrorMessage(e.toString());
     showErrorMessage(
-      `Something went wrong fetching you Android emulators! Make sure your path is correct.`
+      `Something went wrong fetching you Android emulators! Make sure your path is correct. Try running this command in your terminal: ${command}`
     );
     return false;
   }
 };
 
 const runAndroidEmulator = async emulator => {
+  const command = `${path.join(emulatorPath(), ANDROID.PATH)}${
+    ANDROID_COMMANDS.RUN_AVD
+  }${emulator}`;
   try {
-    const res = await runCmd(`${path.join(emulatorPath(), ANDROID.PATH)}${
-      ANDROID_COMMANDS.RUN_AVD
-      }${emulator}`,
-      { cwd: emulatorPath().replace("~", process.env.HOME) }
-    );
+    const res = await runCmd(command, {
+      cwd: emulatorPath().replace("~", process.env.HOME)
+    });
     return res || false;
   } catch (e) {
     showErrorMessage(e.toString());
     showErrorMessage(
-      `Something went wrong running you Android emulator!`
+      `Something went wrong running you Android emulator! Try running this command in your terminal: ${command}`
     );
-    return false
+    return false;
   }
 };

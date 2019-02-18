@@ -25,7 +25,9 @@ exports.androidPick = async () => {
 };
 
 const getAndroidEmulators = async () => {
-  const androidPath = emulatorPath();
+  const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
+    .trim()
+    .replace('\n', '');
   if (!androidPath) {
     return false;
   }
@@ -42,7 +44,7 @@ const getAndroidEmulators = async () => {
       return res.trim().split('\n');
     }
     showErrorMessage(
-      `There are no Android emulators found, please check if you have any emulators installed.`
+      'There are no Android emulators found, please check if you have any emulators installed.'
     );
     return false;
   } catch (e) {
@@ -55,7 +57,9 @@ const getAndroidEmulators = async () => {
 };
 
 const runAndroidEmulator = async emulator => {
-  const androidPath = emulatorPath();
+  const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
+    .trim()
+    .replace('\n', '');
   if (!androidPath) {
     return false;
   }

@@ -27,7 +27,9 @@ exports.androidPick = async () => {
 const getAndroidEmulators = async () => {
   const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
     .trim()
-    .replace('\n', '');
+    .replace('\n', '')
+    .replace('"', '');
+
   if (!androidPath) {
     return false;
   }
@@ -59,7 +61,8 @@ const getAndroidEmulators = async () => {
 const runAndroidEmulator = async emulator => {
   const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
     .trim()
-    .replace('\n', '');
+    .replace('\n', '')
+    .replace('"', '');
   if (!androidPath) {
     return false;
   }

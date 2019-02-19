@@ -27,8 +27,7 @@ exports.androidPick = async () => {
 const getAndroidEmulators = async () => {
   const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
     .trim()
-    .replace('\n', '')
-    .replace('"', '');
+    .replace(/[\n\r"]/g, '');
 
   if (!androidPath) {
     return false;
@@ -36,7 +35,7 @@ const getAndroidEmulators = async () => {
 
   const command = `${path.join(androidPath, ANDROID.PATH)}${
     ANDROID_COMMANDS.LIST_AVDS
-  }`;
+    }`;
   try {
     const res = await runCmd(command, {
       cwd: androidPath.replace('~', process.env.HOME)
@@ -61,15 +60,14 @@ const getAndroidEmulators = async () => {
 const runAndroidEmulator = async emulator => {
   const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
     .trim()
-    .replace('\n', '')
-    .replace('"', '');
+    .replace(/[\n\r"]/g, '');
   if (!androidPath) {
     return false;
   }
 
   const command = `${path.join(androidPath, ANDROID.PATH)}${
     ANDROID_COMMANDS.RUN_AVD
-  }${emulator}`;
+    }${emulator}`;
   try {
     const res = await runCmd(command, {
       cwd: androidPath.replace('~', process.env.HOME)

@@ -25,14 +25,17 @@ exports.androidPick = async () => {
 };
 
 const getAndroidEmulators = async () => {
-  const androidPath = emulatorPath();
+  const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
+    .trim()
+    .replace(/[\n\r"]/g, '');
+
   if (!androidPath) {
     return false;
   }
 
   const command = `${path.join(androidPath, ANDROID.PATH)}${
     ANDROID_COMMANDS.LIST_AVDS
-  }`;
+    }`;
   try {
     const res = await runCmd(command, {
       cwd: androidPath.replace('~', process.env.HOME)
@@ -42,7 +45,7 @@ const getAndroidEmulators = async () => {
       return res.trim().split('\n');
     }
     showErrorMessage(
-      `There are no Android emulators found, please check if you have any emulators installed.`
+      'There are no Android emulators found, please check if you have any emulators installed.'
     );
     return false;
   } catch (e) {
@@ -55,14 +58,16 @@ const getAndroidEmulators = async () => {
 };
 
 const runAndroidEmulator = async emulator => {
-  const androidPath = emulatorPath();
+  const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
+    .trim()
+    .replace(/[\n\r"]/g, '');
   if (!androidPath) {
     return false;
   }
 
   const command = `${path.join(androidPath, ANDROID.PATH)}${
     ANDROID_COMMANDS.RUN_AVD
-  }${emulator}`;
+    }${emulator}`;
   try {
     const res = await runCmd(command, {
       cwd: androidPath.replace('~', process.env.HOME)

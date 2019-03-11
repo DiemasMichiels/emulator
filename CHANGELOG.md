@@ -1,3 +1,7 @@
+# 1.0.1
+
+- Expand path support thanks to antonholmbergmi and RodrigoSaka - issue 14
+
 # 1.0.0
 
 - Finally some decent error reporting

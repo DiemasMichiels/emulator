@@ -1,3 +1,7 @@
+# 1.1.0
+
+- Add multiple config variable for multiple OS support - issue 23 - enhancement
+
 # 1.0.1
 
 - Expand path support thanks to antonholmbergmi and RodrigoSaka - issue 14

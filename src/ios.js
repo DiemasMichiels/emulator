@@ -30,8 +30,7 @@ const getIOSSimulators = async () => {
         res
           .trim()
           .split('\n')
-          .filter(s => s.includes('Simulator'))
-          .map(s => s.replace(/ *\([^)]*\) */g, ''))) ||
+          .filter(s => s.includes('Simulator'))) ||
       false
     )
   } catch (e) {

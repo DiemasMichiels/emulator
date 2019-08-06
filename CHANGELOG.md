@@ -1,3 +1,7 @@
+# 1.3.0
+
+- Add more details to the ios simulator device list - issue 24 - enhancement
+
 # 1.2.0
 
 - Add cold boot option for android devices, this needs to be activated in the config - issue 22 - enhancement

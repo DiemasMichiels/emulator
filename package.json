@@ -2,7 +2,7 @@
   "name": "emulate",
   "displayName": "Android iOS Emulator",
   "description": "Run Android emulator and iOS simulator easily from VScode!",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "DiemasMichiels",
   "author": {
     "name": "Diemas Michiels"
@@ -57,27 +57,28 @@
       "properties": {
         "emulator.emulatorPath": {
           "type": "string",
-          "default": "~/Library/Android/sdk/tools/emulator",
-          "description": "The absolute path of the Android directory containing the emulator script.",
-          "scope": "application"
+          "default": "~/Library/Android/sdk/emulator",
+          "description": "The absolute path of the Android directory containing the emulator script."
         },
         "emulator.emulatorPathMac": {
           "type": "string",
           "default": "",
-          "description": "The absolute path of the Android directory on your Macbook containing the emulator script.",
-          "scope": "application"
+          "description": "The absolute path of the Android directory on your Macbook containing the emulator script."
         },
         "emulator.emulatorPathLinux": {
           "type": "string",
           "default": "",
-          "description": "The absolute path of the Android directory on your Linux containing the emulator script.",
-          "scope": "application"
+          "description": "The absolute path of the Android directory on your Linux containing the emulator script."
         },
         "emulator.emulatorPathWindows": {
           "type": "string",
           "default": "",
-          "description": "The absolute path of the Android directory on your Windows containing the emulator script.",
-          "scope": "application"
+          "description": "The absolute path of the Android directory on your Windows containing the emulator script."
+        },
+        "emulator.androidColdBoot": {
+          "type": "boolean",
+          "default": false,
+          "description": "When activating this you will have an option to cold boot android devices"
         }
       }
     }

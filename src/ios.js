@@ -46,7 +46,7 @@ const getIOSSimulators = async () => {
 }
 
 const runIOSSimulator = async simulator => {
-  const uuid = simulator.match(/\[(.*?)\]/g)[0].replace(/[\[\]']+/g, '')
+  const uuid = simulator.match(/\[(.*?)\]/g)[0].replace(/[[\]']+/g, '')
 
   try {
     const res = await runCmd(IOS_COMMANDS.RUN_SIMULATOR + uuid)

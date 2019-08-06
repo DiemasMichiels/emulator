@@ -1,3 +1,7 @@
+# 1.2.0
+
+- Add cold boot option for android devices, this needs to be activated in the config - issue 22 - enhancement
+
 # 1.1.0
 
 - Add multiple config variable for multiple OS support - issue 23 - enhancement

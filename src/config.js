@@ -27,10 +27,14 @@ exports.emulatorPath = () => {
 
   if (process.platform.startsWith('win') && path.includes('/')) {
     showErrorMessage(
-      `Make sure your Windows path is set correctly! Example: C:\\Users\\Me\\AppData\\Local\\Android\\Sdk\\emulator`
+      'Make sure your Windows path is set correctly! Example: C:\\Users\\Me\\AppData\\Local\\Android\\Sdk\\emulator'
     )
     return false
   }
 
   return path
+}
+
+exports.androidColdBoot = () => {
+  return config().get('androidColdBoot')
 }

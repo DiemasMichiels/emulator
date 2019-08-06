@@ -6,7 +6,7 @@ const { showSuccessMessage, showErrorMessage } = require('./utils/message')
 const { ANDROID_COMMANDS, ANDROID } = require('./constants')
 
 // Get Android devices and pick one
-exports.androidPick = async () => {
+exports.androidPick = async (cold = false) => {
   const emulators = await getAndroidEmulators()
   if (emulators) {
     const formattedEmulators = emulators.map(e => ({
@@ -15,7 +15,7 @@ exports.androidPick = async () => {
     }))
     window.showQuickPick(formattedEmulators).then(async response => {
       if (response) {
-        const ranEmulator = await runAndroidEmulator(response.emulator)
+        const ranEmulator = await runAndroidEmulator(response.emulator, cold)
         if (ranEmulator) {
           showSuccessMessage('Emulator is booting up ...')
         }
@@ -24,11 +24,14 @@ exports.androidPick = async () => {
   }
 }
 
-const getAndroidEmulators = async () => {
-  const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
+const getAndroidPath = async () => {
+  return (await runCmd(`echo "${emulatorPath()}"`))
     .trim()
     .replace(/[\n\r"]/g, '')
+}
 
+const getAndroidEmulators = async (cold) => {
+  const androidPath = await getAndroidPath()
   if (!androidPath) {
     return false
   }
@@ -57,16 +60,14 @@ const getAndroidEmulators = async () => {
   }
 }
 
-const runAndroidEmulator = async emulator => {
-  const androidPath = (await runCmd(`echo "${emulatorPath()}"`))
-    .trim()
-    .replace(/[\n\r"]/g, '')
+const runAndroidEmulator = async (emulator, cold) => {
+  const androidPath = await getAndroidPath()
   if (!androidPath) {
     return false
   }
 
   const command = `${path.join(androidPath, ANDROID.PATH)}${
-    ANDROID_COMMANDS.RUN_AVD
+    cold ? ANDROID_COMMANDS.RUN_AVD_COLD : ANDROID_COMMANDS.RUN_AVD
   }${emulator}`
   try {
     const res = await runCmd(command, {

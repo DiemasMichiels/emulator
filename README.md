@@ -32,6 +32,9 @@ You can either set the default path or specify a specific path for each operatin
 Your visual studio code settings are found here:  
 &nbsp;&nbsp;&nbsp;&nbsp;File -> Preferences -> Setting -> User Setting -> Extensions -> Emulator Configuration
 
+You now have the option to start Android emulators in cold boot modus. Activate it in your settings in Visual Studio Code:  
+&nbsp;&nbsp;&nbsp;&nbsp;Android Cold Boot: `true`
+
 ### Xcode
 
 To run iOS emulators Xcode is required.
@@ -40,7 +43,7 @@ To run iOS emulators Xcode is required.
 
 MIT License
 
-Copyright (c) 2018 Diemas Michiels
+Copyright (c) 2019 Diemas Michiels
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

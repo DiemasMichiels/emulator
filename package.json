@@ -47,7 +47,7 @@
       "editor/title": [
         {
           "command": "emulator.start",
-          "when": "editorFocus",
+          "when": "config.emulator.hasEditorTitleIcon",
           "group": "navigation"
         }
       ]
@@ -78,7 +78,12 @@
         "emulator.androidColdBoot": {
           "type": "boolean",
           "default": false,
-          "description": "When activating this you will have an option to cold boot android devices"
+          "description": "Show an option to cold boot android devices."
+        },
+        "emulator.hasEditorTitleIcon": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the emulator icon in the editor bar on the top right."
         }
       }
     }

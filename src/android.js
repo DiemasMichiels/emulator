@@ -33,7 +33,7 @@ const getAndroidEmulators = async (cold) => {
     return false
   }
 
-  const command = `${path.join(androidPath, ANDROID.PATH)}${
+  const command = `"${path.join(androidPath, ANDROID.PATH)}"${
     ANDROID_COMMANDS.LIST_AVDS
   }`
   try {

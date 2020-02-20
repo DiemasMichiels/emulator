@@ -29,7 +29,7 @@ const getAndroidPath = async () => {
 
 const getEmulatorPath = (androidPath) => {
   const emulatorPath = path.join(androidPath, ANDROID.PATH)
-  if (process.platform.startsWith('win') && pathWindows) {
+  if (process.platform.startsWith('win')) {
     return `"${emulatorPath}"`
   }
   return emulatorPath

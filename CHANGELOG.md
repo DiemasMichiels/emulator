@@ -1,3 +1,9 @@
+# 1.4.0
+
+- Remove 'Emulator is booting up...' message - issue 28 - bug
+- Add a config option to hide the editor/title icon in the top right - issue 27 - enhancement
+- Fix windows paths with spaces - issue 26 - bug
+
 # 1.3.0
 
 - Add more details to the ios simulator device list - issue 24 - enhancement

@@ -2,7 +2,7 @@ const path = require('path')
 const { window } = require('vscode')
 const { emulatorPath } = require('./config')
 const { runCmd } = require('./utils/commands')
-const { showSuccessMessage, showErrorMessage } = require('./utils/message')
+const { showErrorMessage } = require('./utils/message')
 const { ANDROID_COMMANDS, ANDROID } = require('./constants')
 
 // Get Android devices and pick one
@@ -16,9 +16,6 @@ exports.androidPick = async (cold = false) => {
     window.showQuickPick(formattedEmulators).then(async response => {
       if (response) {
         const ranEmulator = await runAndroidEmulator(response.emulator, cold)
-        if (ranEmulator) {
-          showSuccessMessage('Emulator is booting up ...')
-        }
       }
     })
   }

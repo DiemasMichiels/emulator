@@ -1,6 +1,6 @@
 const { window } = require('vscode')
 const { runCmd } = require('./utils/commands')
-const { showSuccessMessage, showErrorMessage } = require('./utils/message')
+const { showErrorMessage } = require('./utils/message')
 const { IOS_COMMANDS } = require('./constants')
 
 // Get iOS devices and pick one
@@ -14,9 +14,6 @@ exports.iOSPick = async () => {
     window.showQuickPick(formattedSimulators).then(async response => {
       if (response) {
         const ranSimulator = await runIOSSimulator(response.simulator)
-        if (ranSimulator) {
-          showSuccessMessage('Emulator is booting up ...')
-        }
       }
     })
   }

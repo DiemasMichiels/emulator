@@ -27,13 +27,21 @@ const getAndroidPath = async () => {
     .replace(/[\n\r"]/g, '')
 }
 
+const getEmulatorPath = (androidPath) => {
+  const emulatorPath = path.join(androidPath, ANDROID.PATH)
+  if (process.platform.startsWith('win') && pathWindows) {
+    return `"${emulatorPath}"`
+  }
+  return emulatorPath
+}
+
 const getAndroidEmulators = async (cold) => {
   const androidPath = await getAndroidPath()
   if (!androidPath) {
     return false
   }
 
-  const command = `"${path.join(androidPath, ANDROID.PATH)}"${
+  const command = `${getEmulatorPath(androidPath)}${
     ANDROID_COMMANDS.LIST_AVDS
   }`
   try {
@@ -63,7 +71,7 @@ const runAndroidEmulator = async (emulator, cold) => {
     return false
   }
 
-  const command = `${path.join(androidPath, ANDROID.PATH)}${
+  const command = `${getEmulatorPath(androidPath)}${
     cold ? ANDROID_COMMANDS.RUN_AVD_COLD : ANDROID_COMMANDS.RUN_AVD
   }${emulator}`
   try {

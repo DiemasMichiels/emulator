@@ -38,3 +38,6 @@ exports.emulatorPath = () => {
 exports.androidColdBoot = () => {
   return config().get('androidColdBoot')
 }
+exports.androidExtraBootArgs = () => {
+  return config().get('androidExtraBootArgs')
+}

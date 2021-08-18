@@ -4,6 +4,7 @@ const { emulatorPath } = require('./config')
 const { runCmd } = require('./utils/commands')
 const { showErrorMessage } = require('./utils/message')
 const { ANDROID_COMMANDS, ANDROID } = require('./constants')
+const { androidExtraBootArgs } = require('./config')
 
 // Get Android devices and pick one
 exports.androidPick = async (cold = false) => {
@@ -71,7 +72,7 @@ const runAndroidEmulator = async (emulator, cold) => {
     return false
   }
 
-  const command = `${getEmulatorPath(androidPath)}${
+  const command = `${getEmulatorPath(androidPath)} ${androidExtraBootArgs()}${
     cold ? ANDROID_COMMANDS.RUN_AVD_COLD : ANDROID_COMMANDS.RUN_AVD
   }${emulator}`
   try {

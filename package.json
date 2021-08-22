@@ -80,6 +80,11 @@
           "default": false,
           "description": "Show an option to cold boot android devices."
         },
+        "emulator.androidExtraBootArgs": {
+          "type": "string",
+          "default": "",
+          "description": "Add extra boot args to the android emulator"
+        },
         "emulator.hasEditorTitleIcon": {
           "type": "boolean",
           "default": true,

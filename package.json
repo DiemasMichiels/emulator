@@ -58,22 +58,22 @@
         "emulator.emulatorPath": {
           "type": "string",
           "default": "~/Library/Android/sdk/emulator",
-          "description": "The absolute path of the Android directory containing the emulator script."
+          "description": "The absolute path of the Android emulator directory containing the emulator script."
         },
         "emulator.emulatorPathMac": {
           "type": "string",
           "default": "",
-          "description": "The absolute path of the Android directory on your Macbook containing the emulator script."
+          "description": "The absolute path of the Android emulator directory on your Macbook containing the emulator script."
         },
         "emulator.emulatorPathLinux": {
           "type": "string",
           "default": "",
-          "description": "The absolute path of the Android directory on your Linux containing the emulator script."
+          "description": "The absolute path of the Android emulator directory on your Linux containing the emulator script."
         },
         "emulator.emulatorPathWindows": {
           "type": "string",
           "default": "",
-          "description": "The absolute path of the Android directory on your Windows containing the emulator script."
+          "description": "The absolute path of the Android emulator directory on your Windows containing the emulator script."
         },
         "emulator.androidColdBoot": {
           "type": "boolean",
@@ -94,11 +94,9 @@
     }
   },
   "scripts": {
-    "lint": "prettier --write .",
-    "test": "node ./node_modules/vscode/bin/test"
+    "lint": "prettier --write ."
   },
   "devDependencies": {
-    "@vscode/test-electron": "^1.6.2",
     "prettier": "^2.3.2"
   },
   "dependencies": {

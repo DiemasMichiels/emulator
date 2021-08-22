@@ -9,7 +9,7 @@ Link to marketplace: https://marketplace.visualstudio.com/items?itemName=DiemasM
 
 Select and run your emulator from Visual Studio Code.
 
-Open command pallete `Cmd-Shift-P` -> Type `Emulator`
+Open all commands with `Cmd-Shift-P` and type `Emulator` or click the Emulator icon in the top right.
 
 ![Image of Emulator](https://raw.githubusercontent.com/DiemasMichiels/Emulator/master/images/emulator.gif)
 
@@ -25,9 +25,9 @@ You can either set the default path or specify a specific path for each operatin
 &nbsp;&nbsp;&nbsp;&nbsp;Mac: `"emulator.emulatorPathMac": "~/Library/Android/sdk/emulator"`  
 &nbsp;&nbsp;&nbsp;&nbsp;Linux: `"emulator.emulatorPathLinux": "~/Android/Sdk/emulator"`
 &nbsp;&nbsp;&nbsp;&nbsp;Windows: `"emulator.emulatorPathWindows":`  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"<yourAndroidHome>\\Sdk\\emulator\\emulator.exe"`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"<yourAndroidHome>\\Sdk\\emulator"`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"C:\\Users\\<yourUsername>\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe"`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"C:\\Users\\<yourUsername>\\AppData\\Local\\Android\\Sdk\\emulator"`
 
 Your visual studio code settings are found here:  
 &nbsp;&nbsp;&nbsp;&nbsp;File -> Preferences -> Setting -> User Setting -> Extensions -> Emulator Configuration

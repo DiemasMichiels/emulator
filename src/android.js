@@ -10,11 +10,11 @@ const { androidExtraBootArgs } = require('./config')
 exports.androidPick = async (cold = false) => {
   const emulators = await getAndroidEmulators()
   if (emulators) {
-    const formattedEmulators = emulators.map(e => ({
+    const formattedEmulators = emulators.map((e) => ({
       label: e.replace(/_/g, ' '),
-      emulator: e
+      emulator: e,
     }))
-    window.showQuickPick(formattedEmulators).then(async response => {
+    window.showQuickPick(formattedEmulators).then(async (response) => {
       if (response) {
         const ranEmulator = await runAndroidEmulator(response.emulator, cold)
       }
@@ -42,25 +42,23 @@ const getAndroidEmulators = async (cold) => {
     return false
   }
 
-  const command = `${getEmulatorPath(androidPath)}${
-    ANDROID_COMMANDS.LIST_AVDS
-  }`
+  const command = `${getEmulatorPath(androidPath)}${ANDROID_COMMANDS.LIST_AVDS}`
   try {
     const res = await runCmd(command, {
-      cwd: androidPath.replace('~', process.env.HOME)
+      cwd: androidPath.replace('~', process.env.HOME),
     })
 
     if (res) {
       return res.trim().split('\n')
     }
     showErrorMessage(
-      'There are no Android emulators found, please check if you have any emulators installed.'
+      'There are no Android emulators found, please check if you have any emulators installed.',
     )
     return false
   } catch (e) {
     showErrorMessage(e.toString())
     showErrorMessage(
-      `Something went wrong fetching you Android emulators! Make sure your path is correct. Try running this command in your terminal: ${command}`
+      `Something went wrong fetching you Android emulators! Make sure your path is correct. Try running this command in your terminal: ${command}`,
     )
     return false
   }
@@ -77,13 +75,13 @@ const runAndroidEmulator = async (emulator, cold) => {
   }${emulator}`
   try {
     const res = await runCmd(command, {
-      cwd: androidPath.replace('~', process.env.HOME)
+      cwd: androidPath.replace('~', process.env.HOME),
     })
     return res || false
   } catch (e) {
     showErrorMessage(e.toString())
     showErrorMessage(
-      `Something went wrong running you Android emulator! Try running this command in your terminal: ${command}`
+      `Something went wrong running you Android emulator! Try running this command in your terminal: ${command}`,
     )
     return false
   }

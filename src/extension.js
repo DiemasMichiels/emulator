@@ -4,7 +4,7 @@ const { androidColdBoot } = require('./config')
 const { androidPick } = require('./android')
 const { iOSPick } = require('./ios')
 
-exports.activate = context => {
+exports.activate = (context) => {
   const disposable = commands.registerCommand('emulator.start', () => {
     const pickerList = [OS_PICKER.ANDROID]
     if (process.platform === 'darwin') {
@@ -14,7 +14,7 @@ exports.activate = context => {
       pickerList.push(OS_PICKER.ANDROID_COLD)
     }
 
-    window.showQuickPick(pickerList).then(response => {
+    window.showQuickPick(pickerList).then((response) => {
       switch (response) {
         case OS_PICKER.ANDROID:
           androidPick(false)

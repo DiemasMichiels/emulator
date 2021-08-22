@@ -27,7 +27,7 @@ You can either set the default path or specify a specific path for each operatin
 &nbsp;&nbsp;&nbsp;&nbsp;Windows: `"emulator.emulatorPathWindows":`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"<yourAndroidHome>\\Sdk\\emulator\\emulator.exe"`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"C:\\Users\\<yourUsername>\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe"`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"C:\\Users\\<yourUsername>\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe"`
 
 Your visual studio code settings are found here:  
 &nbsp;&nbsp;&nbsp;&nbsp;File -> Preferences -> Setting -> User Setting -> Extensions -> Emulator Configuration

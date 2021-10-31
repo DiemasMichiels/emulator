@@ -13,7 +13,8 @@ exports.ANDROID_COMMANDS = {
 exports.IOS_COMMANDS = {
   LIST_SIMULATORS: 'xcrun simctl list --json devices',
   DEVELOPER_DIR: 'xcode-select -p',
-  RUN_SIMULATOR: '/Applications/Simulator.app --args -CurrentDeviceUDID ',
+  SIMULATOR_APP: '/Applications/Simulator.app ',
+  SIMULATOR_ARGS: ' --args -CurrentDeviceUDID ',
 }
 
 exports.ANDROID = {

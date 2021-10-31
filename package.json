@@ -55,10 +55,15 @@
     "configuration": {
       "title": "Emulator Configuration",
       "properties": {
+        "emulator.simulatorPath": {
+          "type": "string",
+          "default": "",
+          "description": "The absolute path of your Xcode simulator directory containing the Simulator.app script. Leaving it empty will automatically select the path with xcode-select -p."
+        },
         "emulator.emulatorPath": {
           "type": "string",
           "default": "~/Library/Android/sdk/emulator",
-          "description": "The absolute path of the Android emulator directory containing the emulator script."
+          "description": "The absolute path of your Android emulator directory containing the emulator script."
         },
         "emulator.emulatorPathMac": {
           "type": "string",

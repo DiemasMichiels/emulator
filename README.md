@@ -43,6 +43,9 @@ You now have the option to start Android emulators in cold boot modus. Activate 
 
 To run iOS emulators Xcode is required.
 
+If your Xcode or simulator is not installed in the default location it is possible to set the correct path of the Simulator.app file:  
+`"emulator.simulatorPath": "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"` 
+
 ## License
 
 MIT License

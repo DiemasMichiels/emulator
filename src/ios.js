@@ -2,6 +2,7 @@ const { window } = require('vscode')
 const { runCmd } = require('./utils/commands')
 const { showErrorMessage } = require('./utils/message')
 const { IOS_COMMANDS } = require('./constants')
+const { simulatorPath } = require('./config')
 
 // Get iOS devices and pick one
 exports.iOSPick = async () => {
@@ -40,14 +41,23 @@ const getIOSSimulators = async () => {
 
 const runIOSSimulator = async (simulator) => {
   try {
-    const developerdir = await runCmd(IOS_COMMANDS.DEVELOPER_DIR);
-    const res = await runCmd('open ' + developerdir.trim() + IOS_COMMANDS.RUN_SIMULATOR + simulator)
+    let developerDir
+    const configPath = simulatorPath()
+    const xcodePath = await runCmd(IOS_COMMANDS.DEVELOPER_DIR)
+
+    if (configPath) {
+      developerDir = configPath
+    } else {
+      developerDir = xcodePath.trim() + IOS_COMMANDS.SIMULATOR_APP;
+    }
+    
+    const res = await runCmd('open ' + developerDir + IOS_COMMANDS.SIMULATOR_ARGS + simulator)
     return res || false
   } catch (e) {
     showErrorMessage(e.toString())
     showErrorMessage(
       `Something went wrong running you iOS simulator! Try running this command in your terminal: ${
-        'open ' + developerdir.trim() + IOS_COMMANDS.RUN_SIMULATOR + simulator
+        'open ' + developerDir.trim() + IOS_COMMANDS.RUN_SIMULATOR + simulator
       }`,
     )
     return false

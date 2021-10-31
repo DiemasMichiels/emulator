@@ -1,3 +1,13 @@
+# 1.6.0
+
+- Instruments got deprecated launch through Simulator.app itself thanks to wbroek - issue 45 - bug
+- Add optional path to select the Xcode Simulator.app file
+
+# 1.5.0
+
+- Add optional boot args Android thanks to sableangle - issue 38 - bug
+- Switch from standardJS to prettier
+
 # 1.4.0
 
 - Remove 'Emulator is booting up...' message - issue 28 - bug

@@ -8,8 +8,8 @@ exports.iOSPick = async () => {
   const simulators = await getIOSSimulators()
   if (simulators) {
     const formattedSimulators = simulators.map((s) => ({
-      label: s.replace(/\[(.*)/g, ''),
-      simulator: s,
+      label: `${s.name} (${s.udid})`,
+      simulator: s.udid,
     }))
     window.showQuickPick(formattedSimulators).then(async (response) => {
       if (response) {
@@ -22,14 +22,13 @@ exports.iOSPick = async () => {
 const getIOSSimulators = async () => {
   try {
     const res = await runCmd(IOS_COMMANDS.LIST_SIMULATORS)
-    return (
-      (res &&
-        res
-          .trim()
-          .split('\n')
-          .filter((s) => s.includes('Simulator'))) ||
-      false
-    )
+    const { devices } = JSON.parse(res);
+    return Object.keys(devices).reduce((array, item) => {
+        if (devices[item].length > 0) {
+          return [...array, ...devices[item]];
+        }
+        return array;
+    }, []).filter((item) => item.isAvailable);
   } catch (e) {
     showErrorMessage(e.toString())
     showErrorMessage(
@@ -40,22 +39,17 @@ const getIOSSimulators = async () => {
 }
 
 const runIOSSimulator = async (simulator) => {
-  const uuid = simulator.match(/\[(.*?)\]/g)[0].replace(/[[\]']+/g, '')
-
   try {
-    const res = await runCmd(IOS_COMMANDS.RUN_SIMULATOR + uuid)
+    const developerdir = await runCmd(IOS_COMMANDS.DEVELOPER_DIR);
+    const res = await runCmd('open ' + developerdir.trim() + IOS_COMMANDS.RUN_SIMULATOR + simulator)
     return res || false
   } catch (e) {
-    if (!e.toString().includes('//instrumentscli0.trace')) {
-      showErrorMessage(e.toString())
-      showErrorMessage(
-        `Something went wrong running you iOS simulator! Try running this command in your terminal: ${
-          IOS_COMMANDS.RUN_SIMULATOR + uuid
-        }`,
-      )
-      return false
-    } else {
-      return true
-    }
+    showErrorMessage(e.toString())
+    showErrorMessage(
+      `Something went wrong running you iOS simulator! Try running this command in your terminal: ${
+        'open ' + developerdir.trim() + IOS_COMMANDS.RUN_SIMULATOR + simulator
+      }`,
+    )
+    return false
   }
 }

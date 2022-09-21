@@ -1,14 +1,11 @@
 const { workspace } = require('vscode')
-const { showErrorMessage } = require('./utils/message')
 
-const config = () => {
-  return workspace.getConfiguration('emulator')
-}
+const config = workspace.getConfiguration('emulator')
 
-const getPath = () => {
-  const pathMac = config().get('emulatorPathMac')
-  const pathLinux = config().get('emulatorPathLinux')
-  const pathWindows = config().get('emulatorPathWindows')
+exports.getPath = () => {
+  const pathMac = config.get('emulatorPathMac')
+  const pathLinux = config.get('emulatorPathLinux')
+  const pathWindows = config.get('emulatorPathWindows')
 
   if (process.platform === 'darwin' && pathMac) {
     return pathMac
@@ -19,30 +16,17 @@ const getPath = () => {
   if (process.platform.startsWith('win') && pathWindows) {
     return pathWindows
   }
-  return config().get('emulatorPath')
-}
-
-exports.emulatorPath = () => {
-  const path = getPath()
-
-  if (process.platform.startsWith('win') && path.includes('/')) {
-    showErrorMessage(
-      'Make sure your Windows path is set correctly! Example: C:\\Users\\Me\\AppData\\Local\\Android\\Sdk\\emulator',
-    )
-    return false
-  }
-
-  return path
+  return config.get('emulatorPath')
 }
 
 exports.androidColdBoot = () => {
-  return config().get('androidColdBoot')
+  return config.get('androidColdBoot')
 }
 
 exports.simulatorPath = () => {
-  return config().get('simulatorPath')
+  return config.get('simulatorPath')
 }
 
 exports.androidExtraBootArgs = () => {
-  return config().get('androidExtraBootArgs')
+  return config.get('androidExtraBootArgs')
 }

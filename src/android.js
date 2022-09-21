@@ -1,10 +1,9 @@
 const path = require('path')
 const { window } = require('vscode')
-const { emulatorPath } = require('./config')
+const { getPath, androidExtraBootArgs } = require('./config')
 const { runCmd } = require('./utils/commands')
 const { showErrorMessage } = require('./utils/message')
 const { ANDROID_COMMANDS, ANDROID } = require('./constants')
-const { androidExtraBootArgs } = require('./config')
 
 // Get Android devices and pick one
 exports.androidPick = async (cold = false) => {
@@ -23,17 +22,14 @@ exports.androidPick = async (cold = false) => {
 }
 
 const getAndroidPath = async () => {
-  return (await runCmd(`echo "${emulatorPath()}"`))
+  return (await runCmd(`echo "${getPath()}"`))
     .trim()
     .replace(/[\n\r"]/g, '')
 }
 
 const getEmulatorPath = (androidPath) => {
   const emulatorPath = path.join(androidPath, ANDROID.PATH)
-  if (process.platform.startsWith('win')) {
-    return `"${emulatorPath}"`
-  }
-  return emulatorPath
+  return process.platform.startsWith('win') ? `"${emulatorPath}"` : emulatorPath
 }
 
 const getAndroidEmulators = async (cold) => {
@@ -58,7 +54,7 @@ const getAndroidEmulators = async (cold) => {
   } catch (e) {
     showErrorMessage(e.toString())
     showErrorMessage(
-      `Something went wrong fetching you Android emulators! Make sure your path is correct. Try running this command in your terminal: ${command}`,
+      `Something went wrong fetching your Android emulators! Make sure your path is correct. Try running this command in your terminal: ${command}`,
     )
     return false
   }

@@ -15,7 +15,7 @@ Select and run your emulator from Visual Studio Code.
 
 Open all commands with `Cmd-Shift-P` and type `Emulator` or click the Emulator icon in the top right.
 
-![Image of Emulator](https://raw.githubusercontent.com/DiemasMichiels/Emulator/main/images/emulator.gif)
+![Image of Emulator](https://raw.githubusercontent.com/DiemasMichiels/emulator/main/images/emulator.gif)
 
 ## Requirements
 
@@ -51,7 +51,7 @@ If your Xcode or simulator is not installed in the default location it is possib
 
 ### Windows guide
 
-Check out the [WINDOWS.md](WINDOWS.md) file for the Windows guide with pictures.
+Check out the [windows.md](https://github.com/DiemasMichiels/emulator/blob/main/WINDOWS.md) file for the Windows guide with pictures.
 
 ## License
 

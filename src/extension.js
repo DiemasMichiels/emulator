@@ -6,6 +6,13 @@ const { iOSPick } = require('./ios')
 
 exports.activate = (context) => {
   const disposable = commands.registerCommand('emulator.start', () => {
+    // If on Windows, directly show Android devices
+    if (process.platform.startsWith('win')) {
+      androidPick(false)
+      return
+    }
+
+    // For other platforms, show the OS picker
     const pickerList = [OS_PICKER.ANDROID]
     if (process.platform === 'darwin') {
       pickerList.push(OS_PICKER.IOS)

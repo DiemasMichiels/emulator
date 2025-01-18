@@ -68,7 +68,7 @@
         "emulator.emulatorPathMac": {
           "type": "string",
           "default": "",
-          "description": "The absolute path of the Android emulator directory on your Macbook containing the emulator script."
+          "description": "The absolute path of the Android emulator directory on your MacBook containing the emulator script."
         },
         "emulator.emulatorPathLinux": {
           "type": "string",

@@ -1,5 +1,5 @@
 const path = require('path')
-const { window } = require('vscode')
+const { window, ProgressLocation } = require('vscode')
 const { getPath, androidExtraBootArgs } = require('./config')
 const { runCmd } = require('./utils/commands')
 const { showErrorMessage } = require('./utils/message')
@@ -7,24 +7,59 @@ const { ANDROID_COMMANDS, ANDROID } = require('./constants')
 
 // Get Android devices and pick one
 exports.androidPick = async (cold = false) => {
-  const emulators = await getAndroidEmulators()
-  if (emulators) {
-    const formattedEmulators = emulators.map((e) => ({
-      label: e.replace(/_/g, ' '),
-      emulator: e,
-    }))
-    window.showQuickPick(formattedEmulators).then(async (response) => {
-      if (response) {
-        const ranEmulator = await runAndroidEmulator(response.emulator, cold)
-      }
-    })
+  // Create and show QuickPick with loading state
+  const quickPick = window.createQuickPick()
+  quickPick.placeholder = 'Loading Android emulators...'
+  quickPick.busy = true
+  quickPick.show()
+
+  try {
+    const emulators = await getAndroidEmulators()
+
+    if (emulators) {
+      quickPick.busy = false
+      quickPick.placeholder = 'Select Android emulator'
+      quickPick.items = emulators.map((e) => ({
+        label: e.replace(/_/g, ' '),
+        emulator: e,
+      }))
+
+      quickPick.onDidAccept(async () => {
+        const selected = quickPick.selectedItems[0]
+        if (selected) {
+          quickPick.hide()
+
+          // Show progress indicator while launching emulator
+          await window.withProgress(
+            {
+              location: ProgressLocation.Notification,
+              title: `Launching Android emulator: ${selected.label}`,
+              cancellable: false,
+            },
+            async () => {
+              const result = await runAndroidEmulator(selected.emulator, cold)
+              if (result) {
+                window.showInformationMessage(
+                  `Started emulator: ${selected.label}`,
+                )
+              }
+            },
+          )
+        }
+      })
+
+      quickPick.onDidHide(() => quickPick.dispose())
+    } else {
+      quickPick.dispose()
+    }
+  } catch (error) {
+    quickPick.dispose()
+    showErrorMessage(error.toString())
   }
 }
 
 const getAndroidPath = async () => {
-  return (await runCmd(`echo "${getPath()}"`))
-    .trim()
-    .replace(/[\n\r"]/g, '')
+  return (await runCmd(`echo "${getPath()}"`)).trim().replace(/[\n\r"]/g, '')
 }
 
 const getEmulatorPath = (androidPath) => {

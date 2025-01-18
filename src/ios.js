@@ -1,6 +1,5 @@
 const { window, ProgressLocation } = require('vscode')
 const { runCmd } = require('./utils/commands')
-const { showErrorMessage } = require('./utils/message')
 const { IOS_COMMANDS } = require('./constants')
 const { simulatorPath } = require('./config')
 
@@ -26,24 +25,25 @@ exports.iOSPick = async () => {
       quickPick.onDidAccept(async () => {
         const selected = quickPick.selectedItems[0]
         if (selected) {
-          quickPick.hide()
-
-          // Show progress indicator while launching simulator
-          await window.withProgress(
+          quickPick.busy = true
+          quickPick.items = [
             {
-              location: ProgressLocation.Notification,
-              title: `Launching iOS simulator: ${selected.label}`,
-              cancellable: false,
+              label: `Starting ${selected.label}...`,
+              emulator: selected.emulator,
             },
-            async () => {
-              const result = await runIOSSimulator(selected.simulator)
-              if (result !== false) {
-                window.showInformationMessage(
-                  `Started simulator: ${selected.label}`,
-                )
-              }
+          ]
+
+          const result = await runIOSSimulator(selected.simulator)
+
+          quickPick.items = [
+            {
+              label: `✓ Started ${selected.label}!`,
+              emulator: selected.emulator,
             },
-          )
+          ]
+          quickPick.busy = false
+
+          setTimeout(() => quickPick.dispose(), 1000)
         }
       })
 
@@ -53,7 +53,7 @@ exports.iOSPick = async () => {
     }
   } catch (error) {
     quickPick.dispose()
-    showErrorMessage(error.toString())
+    window.showErrorMessage(error.toString())
   }
 }
 
@@ -70,9 +70,8 @@ const getIOSSimulators = async () => {
       }, [])
       .filter((item) => item.isAvailable)
   } catch (e) {
-    showErrorMessage(e.toString())
-    showErrorMessage(
-      `Something went wrong fetching you iOS simulators! Make sure you have Xcode installed. Try running this command in your terminal: ${IOS_COMMANDS.LIST_SIMULATORS}`,
+    window.showErrorMessage(
+      `Error fetching you iOS simulators! Make sure you have Xcode installed. Try running this command: ${IOS_COMMANDS.LIST_SIMULATORS}`,
     )
     return false
   }
@@ -95,9 +94,8 @@ const runIOSSimulator = async (simulator) => {
     )
     return res || false
   } catch (e) {
-    showErrorMessage(e.toString())
-    showErrorMessage(
-      `Something went wrong running you iOS simulator! Try running this command in your terminal: ${
+    window.showErrorMessage(
+      `Error running you iOS simulator! Try running this command: ${
         'open ' + developerDir.trim() + IOS_COMMANDS.RUN_SIMULATOR + simulator
       }`,
     )

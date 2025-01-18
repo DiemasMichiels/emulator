@@ -3,7 +3,6 @@ const { exec } = require('child_process')
 const { window, ProgressLocation } = require('vscode')
 const { getPath, androidExtraBootArgs, isWSL } = require('./config')
 const { runCmd } = require('./utils/commands')
-const { showErrorMessage } = require('./utils/message')
 const { ANDROID_COMMANDS, ANDROID } = require('./constants')
 
 // Get Android devices and pick one
@@ -29,19 +28,28 @@ exports.androidPick = async (cold = false) => {
         const selected = quickPick.selectedItems[0]
         if (selected) {
           // Update quickpick to show launching status
-          quickPick.items = [{
-            label: `Starting ${selected.label}...`,
-            emulator: selected.emulator
-          }]
+          quickPick.items = [
+            {
+              label: `Starting ${selected.label}...`,
+              emulator: selected.emulator,
+            },
+          ]
           quickPick.busy = true
 
-          await runAndroidEmulator(selected.emulator, cold)
+          const response = await runAndroidEmulator(selected.emulator, cold)
+
+          if (!response) {
+            quickPick.dispose()
+            return
+          }
 
           // Show success message in quickpick
-          quickPick.items = [{
-            label: `✓ Started ${selected.label}!`,
-            emulator: selected.emulator
-          }]
+          quickPick.items = [
+            {
+              label: `${response}${selected.label}!`,
+              emulator: selected.emulator,
+            },
+          ]
           quickPick.busy = false
 
           // Close quickpick after brief delay
@@ -55,7 +63,7 @@ exports.androidPick = async (cold = false) => {
     }
   } catch (error) {
     quickPick.dispose()
-    showErrorMessage(error.toString())
+    window.showErrorMessage(error.toString())
   }
 }
 
@@ -68,7 +76,7 @@ const getEmulatorPath = (androidPath) => {
     const emulatorPath = path.join(androidPath, ANDROID.PATH)
     return `${emulatorPath}.exe`
   }
-  
+
   const emulatorPath = path.join(androidPath, ANDROID.PATH)
   if (process.platform.startsWith('win')) {
     return `"${emulatorPath}"`
@@ -97,14 +105,13 @@ const getAndroidEmulators = async () => {
     if (res) {
       return res.trim().split('\n')
     }
-    showErrorMessage(
-      'There are no Android emulators found, please check if you have any emulators installed.',
+    window.showErrorMessage(
+      'No Android emulators found. Please check if you have any emulators installed.',
     )
     return false
   } catch (e) {
-    showErrorMessage(e.toString())
-    showErrorMessage(
-      `Something went wrong fetching your Android emulators! Make sure your path is correct. Try running this command in your terminal: ${command}`,
+    window.showErrorMessage(
+      `Error fetching your Android emulators! Make sure your path is correct. Try running this command: ${command}`,
     )
     return false
   }
@@ -128,20 +135,20 @@ const runAndroidEmulator = async (emulator, cold) => {
     if (isWSL()) {
       options.shell = true
       options.detached = true
-    }
-
-    if (isWSL()) {
       const childProcess = exec(command, options)
       childProcess.unref()
-      return
-    } else {
-      await runCmd(command, options)
-      return
+      return '✓ Started '
     }
+
+    await runCmd(command, options)
+    return '✓ Started '
   } catch (e) {
-    showErrorMessage(e.toString())
-    showErrorMessage(
-      `Something went wrong running your Android emulator! Try running this command in your terminal: ${command}`,
+    if (e.stdout.includes('Running multiple emulators with the same AVD')) {
+      return 'Already running '
+    }
+
+    window.showErrorMessage(
+      `Error running your Android emulator! Try running this command: ${command}`,
     )
     return false
   }

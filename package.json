@@ -80,6 +80,11 @@
           "default": "",
           "description": "The absolute path of the Android emulator directory on your Windows containing the emulator script."
         },
+        "emulator.emulatorPathWSL": {
+          "type": "string",
+          "default": "",
+          "description": "The absolute path of the Android emulator directory when running in WSL. (e.g. /mnt/c/Users/username/AppData/Local/Android/Sdk/emulator)"
+        },
         "emulator.androidColdBoot": {
           "type": "boolean",
           "default": false,

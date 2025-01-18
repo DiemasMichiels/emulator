@@ -31,7 +31,7 @@ You can either set the default path or specify a specific path for each operatin
 &nbsp;&nbsp;&nbsp;&nbsp;Windows: `"emulator.emulatorPathWindows":`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"<yourAndroidHome>\\Sdk\\emulator"`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"C:\\Users\\<yourUsername>\\AppData\\Local\\Android\\Sdk\\emulator"`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"C:\Users\<yourUsername>\AppData\Local\Android\Sdk\emulator"`
 
 Your visual studio code settings are found here:  
 &nbsp;&nbsp;&nbsp;&nbsp;File -> Preferences -> Setting -> User Setting -> Extensions -> Emulator Configuration
@@ -44,7 +44,7 @@ You now have the option to start Android emulators in cold boot modus. Activate 
 To run iOS emulators Xcode is required.
 
 If your Xcode or simulator is not installed in the default location it is possible to set the correct path of the Simulator.app file:  
-`"emulator.simulatorPath": "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"` 
+`"emulator.simulatorPath": "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"`
 
 ## License
 

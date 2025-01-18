@@ -1,4 +1,4 @@
-const { window, ProgressLocation } = require('vscode')
+const { window } = require('vscode')
 const { runCmd } = require('./utils/commands')
 const { IOS_COMMANDS } = require('./constants')
 const { simulatorPath } = require('./config')
@@ -19,7 +19,7 @@ exports.iOSPick = async () => {
       quickPick.placeholder = 'Select iOS simulator'
       quickPick.items = simulators.map((s) => ({
         label: `${s.name} (${s.udid})`,
-        simulator: s.udid,
+        simulator: s,
       }))
 
       quickPick.onDidAccept(async () => {
@@ -29,16 +29,16 @@ exports.iOSPick = async () => {
           quickPick.items = [
             {
               label: `Starting ${selected.label}...`,
-              emulator: selected.emulator,
+              simulator: selected.simulator,
             },
           ]
 
-          const result = await runIOSSimulator(selected.simulator)
+          await runIOSSimulator(selected.simulator)
 
           quickPick.items = [
             {
               label: `✓ Started ${selected.label}!`,
-              emulator: selected.emulator,
+              simulator: selected.simulator,
             },
           ]
           quickPick.busy = false
@@ -61,6 +61,7 @@ const getIOSSimulators = async () => {
   try {
     const res = await runCmd(IOS_COMMANDS.LIST_SIMULATORS)
     const { devices } = JSON.parse(res)
+
     return Object.keys(devices)
       .reduce((array, item) => {
         if (devices[item].length > 0) {
@@ -71,7 +72,7 @@ const getIOSSimulators = async () => {
       .filter((item) => item.isAvailable)
   } catch (e) {
     window.showErrorMessage(
-      `Error fetching you iOS simulators! Make sure you have Xcode installed. Try running this command: ${IOS_COMMANDS.LIST_SIMULATORS}`,
+      `Error fetching your iOS simulators! Make sure you have Xcode installed. Try running this command: ${IOS_COMMANDS.LIST_SIMULATORS}`,
     )
     return false
   }
@@ -89,10 +90,16 @@ const runIOSSimulator = async (simulator) => {
       developerDir = xcodePath.trim() + IOS_COMMANDS.SIMULATOR_APP
     }
 
-    const res = await runCmd(
-      'open ' + developerDir + IOS_COMMANDS.SIMULATOR_ARGS + simulator,
+    if (simulator.state !== 'Booted') {
+      // If simulator isn't running, boot it up
+      await runCmd(IOS_COMMANDS.BOOT_SIMULATOR + simulator.udid)
+    }
+
+    await runCmd(
+      'open ' + developerDir + IOS_COMMANDS.SIMULATOR_ARGS + simulator.udid
     )
-    return res || false
+    
+    return
   } catch (e) {
     window.showErrorMessage(
       `Error running you iOS simulator! Try running this command: ${

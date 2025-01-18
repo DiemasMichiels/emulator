@@ -1,13 +1,13 @@
 const { window, commands } = require('vscode')
 const { OS_PICKER } = require('./constants')
-const { androidColdBoot } = require('./config')
+const { androidColdBoot, isWSL } = require('./config')
 const { androidPick } = require('./android')
 const { iOSPick } = require('./ios')
 
 exports.activate = (context) => {
   const disposable = commands.registerCommand('emulator.start', () => {
     // If on Windows, directly show Android devices
-    if (process.platform.startsWith('win')) {
+    if (process.platform.startsWith('win') || isWSL()) {
       androidPick(false)
       return
     }

@@ -1,4 +1,5 @@
 const path = require('path')
+const { exec } = require('child_process')
 const { window, ProgressLocation } = require('vscode')
 const { getPath, androidExtraBootArgs, isWSL } = require('./config')
 const { runCmd } = require('./utils/commands')
@@ -27,27 +28,23 @@ exports.androidPick = async (cold = false) => {
       quickPick.onDidAccept(async () => {
         const selected = quickPick.selectedItems[0]
         if (selected) {
-          // Update quickPick to show launching status
-          quickPick.items = [
-            {
-              label: `Starting ${selected.label}...`,
-              emulator: selected.emulator,
-            },
-          ]
+          // Update quickpick to show launching status
+          quickPick.items = [{
+            label: `Starting ${selected.label}...`,
+            emulator: selected.emulator
+          }]
           quickPick.busy = true
 
           await runAndroidEmulator(selected.emulator, cold)
 
-          // Show success message in quickPick
-          quickPick.items = [
-            {
-              label: `✓ Started ${selected.label}!`,
-              emulator: selected.emulator,
-            },
-          ]
+          // Show success message in quickpick
+          quickPick.items = [{
+            label: `✓ Started ${selected.label}!`,
+            emulator: selected.emulator
+          }]
           quickPick.busy = false
 
-          // Close quickPick after brief delay
+          // Close quickpick after brief delay
           setTimeout(() => quickPick.dispose(), 1000)
         }
       })
@@ -67,12 +64,15 @@ const getAndroidPath = async () => {
 }
 
 const getEmulatorPath = (androidPath) => {
+  if (isWSL()) {
+    const emulatorPath = path.join(androidPath, ANDROID.PATH)
+    return `${emulatorPath}.exe`
+  }
+  
   const emulatorPath = path.join(androidPath, ANDROID.PATH)
-
   if (process.platform.startsWith('win')) {
     return `"${emulatorPath}"`
   }
-
   return emulatorPath
 }
 

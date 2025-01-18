@@ -43,7 +43,7 @@ exports.iOSPick = async () => {
           ]
           quickPick.busy = false
 
-          setTimeout(() => quickPick.dispose(), 1000)
+          setTimeout(() => quickPick.dispose(), 2000)
         }
       })
 

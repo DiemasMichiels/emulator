@@ -7,7 +7,7 @@ const { iOSPick } = require('./ios')
 exports.activate = (context) => {
   const disposable = commands.registerCommand('emulator.start', () => {
     // If on Windows, directly show Android devices
-    if (process.platform.startsWith('win') || isWSL()) {
+    if (!androidColdBoot() && (process.platform.startsWith('win') || isWSL())) {
       androidPick(false)
       return
     }

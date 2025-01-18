@@ -1,5 +1,4 @@
 const path = require('path')
-const { exec } = require('child_process')
 const { window, ProgressLocation } = require('vscode')
 const { getPath, androidExtraBootArgs, isWSL } = require('./config')
 const { runCmd } = require('./utils/commands')
@@ -53,7 +52,7 @@ exports.androidPick = async (cold = false) => {
           quickPick.busy = false
 
           // Close quickpick after brief delay
-          setTimeout(() => quickPick.dispose(), 1000)
+          setTimeout(() => quickPick.dispose(), 2000)
         }
       })
 
@@ -72,15 +71,16 @@ const getAndroidPath = async () => {
 }
 
 const getEmulatorPath = (androidPath) => {
+  const emulatorPath = path.join(androidPath, ANDROID.PATH)
+
   if (isWSL()) {
-    const emulatorPath = path.join(androidPath, ANDROID.PATH)
     return `${emulatorPath}.exe`
   }
 
-  const emulatorPath = path.join(androidPath, ANDROID.PATH)
   if (process.platform.startsWith('win')) {
     return `"${emulatorPath}"`
   }
+
   return emulatorPath
 }
 
@@ -94,10 +94,6 @@ const getAndroidEmulators = async () => {
   try {
     const options = {
       cwd: androidPath.replace('~', process.env.HOME),
-    }
-
-    if (isWSL()) {
-      options.shell = true
     }
 
     const res = await runCmd(command, options)
@@ -132,19 +128,19 @@ const runAndroidEmulator = async (emulator, cold) => {
       cwd: androidPath.replace('~', process.env.HOME),
     }
 
-    if (isWSL()) {
-      options.shell = true
-      options.detached = true
-      const childProcess = exec(command, options)
-      childProcess.unref()
-      return '✓ Started '
-    }
-
     await runCmd(command, options)
     return '✓ Started '
   } catch (e) {
-    if (e.stdout.includes('Running multiple emulators with the same AVD')) {
+    
+    if (e && e.stdout && e.stdout.includes('Running multiple emulators with the same AVD')) {
       return 'Already running '
+    }
+
+    if (e && e.err && e.err.toString().includes("CPU Architecture 'arm'")) {
+      window.showErrorMessage(
+        'ARM-based Android emulators are not supported in WSL. Please use an x86/x64-based Android Virtual Device instead.',
+      )
+      return false
     }
 
     window.showErrorMessage(

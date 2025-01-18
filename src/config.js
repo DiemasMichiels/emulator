@@ -1,7 +1,13 @@
 const { workspace } = require('vscode')
 const os = require('os')
 
-const config = workspace.getConfiguration('emulator')
+let config = workspace.getConfiguration('emulator')
+
+workspace.onDidChangeConfiguration((event) => {
+  if (event.affectsConfiguration('emulator')) {
+    config = workspace.getConfiguration('emulator')
+  }
+})
 
 const isWSL = () => {
   if (process.platform !== 'linux') return false

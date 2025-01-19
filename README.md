@@ -2,6 +2,8 @@
 [![Installs](https://img.shields.io/visual-studio-marketplace/i/DiemasMichiels.emulate)](https://marketplace.visualstudio.com/items?itemName=DiemasMichiels.emulate)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/diemas)
+
 # Android iOS Emulator
 
 A small Visual Studio Code extention to run Android and iOS Simulators in a click.  

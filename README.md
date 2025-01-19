@@ -6,7 +6,7 @@
 
 # Android iOS Emulator
 
-A small Visual Studio Code extention to run Android and iOS Simulators in a click.  
+A small Visual Studio Code extension to run Android and iOS Simulators in a click.  
 Link to marketplace: https://marketplace.visualstudio.com/items?itemName=DiemasMichiels.emulate
 
 **Running iOS simulators only works on Mac with Xcode!**

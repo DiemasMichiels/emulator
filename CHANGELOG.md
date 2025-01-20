@@ -1,3 +1,7 @@
+# 1.7.1
+
+- Added buy me a coffee link to the readme
+
 # 1.7.0
 
 - Allow forward slash on windows and general improvements thanks to multimokia - issue 48 - bug\

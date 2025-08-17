@@ -109,9 +109,7 @@
   "devDependencies": {
     "prettier": "^2.3.2"
   },
-  "dependencies": {
-    "child_process": "1.0.2"
-  },
+  "dependencies": {},
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",

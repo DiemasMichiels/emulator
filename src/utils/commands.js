@@ -1,9 +1,10 @@
-const exec = require('child_process').exec
+const { exec } = require('node:child_process')
 
-exports.runCmd = async (cmd, options) => {
+exports.runCmd = async (cmd) => {
   return new Promise((resolve, reject) => {
-    exec(cmd, options, (err, stdout) => {
+    exec(cmd, (err, stdout) => {
       if (err) {
+        console.log('err', err);
         reject({ err, stdout })
       } else {
         resolve(stdout)

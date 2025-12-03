@@ -92,11 +92,7 @@ const getAndroidEmulators = async () => {
 
   const command = `${getEmulatorPath(androidPath)}${ANDROID_COMMANDS.LIST_AVDS}`
   try {
-    const options = {
-      cwd: androidPath.replace('~', process.env.HOME),
-    }
-
-    const res = await runCmd(command, options)
+    const res = await runCmd(command)
 
     if (res) {
       return res.trim().split('\n')
@@ -124,11 +120,7 @@ const runAndroidEmulator = async (emulator, cold) => {
   }${emulator}`
 
   try {
-    const options = {
-      cwd: androidPath.replace('~', process.env.HOME),
-    }
-
-    await runCmd(command, options)
+    await runCmd(command)
     return '✓ Started '
   } catch (e) {
     

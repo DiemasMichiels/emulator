@@ -1,10 +1,16 @@
+# 1.8.0
+
+- When multiple iOS versions are installed an extra version selection menu is shown - issue 63 - enhancement
+- Removed exec options causing issues - issue 64 - bug
+- Remove child process dependency which is part of node thanks to noritaka1166 - pr 62
+
 # 1.7.1
 
 - Added buy me a coffee link to the readme
 
 # 1.7.0
 
-- Allow forward slash on windows and general improvements thanks to multimokia - issue 48 - bug\
+- Allow forward slash on windows and general improvements thanks to multimokia - issue 48 - bug
 - On windows the selection menu for Android or iOS is now gone
 - WSL is now supported
 - Improved selection flow and information messages

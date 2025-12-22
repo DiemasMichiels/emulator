@@ -92,7 +92,11 @@ const getAndroidEmulators = async () => {
 
   const command = `${getEmulatorPath(androidPath)}${ANDROID_COMMANDS.LIST_AVDS}`
   try {
-    const res = await runCmd(command)
+    const options = {
+      cwd: androidPath.replace('~', process.env.HOME),
+    }
+
+    const res = await runCmd(command, options)
 
     if (res) {
       return res.trim().split('\n')
@@ -120,11 +124,18 @@ const runAndroidEmulator = async (emulator, cold) => {
   }${emulator}`
 
   try {
-    await runCmd(command)
+    const options = {
+      cwd: androidPath.replace('~', process.env.HOME),
+    }
+
+    const res = await runCmd(command, options)
     return '✓ Started '
   } catch (e) {
-    
-    if (e && e.stdout && e.stdout.includes('Running multiple emulators with the same AVD')) {
+    if (
+      e &&
+      e.stdout &&
+      e.stdout.includes('Running multiple emulators with the same AVD')
+    ) {
       return 'Already running '
     }
 

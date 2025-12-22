@@ -1,3 +1,7 @@
+# 1.8.1
+
+- Readd exec options for windows, add fallback when it fails with options - issue 66 - bug
+
 # 1.8.0
 
 - When multiple iOS versions are installed an extra version selection menu is shown - issue 63 - enhancement

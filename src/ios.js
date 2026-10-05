@@ -7,6 +7,8 @@ const { runCmd } = require('./utils/commands')
 const { IOS_COMMANDS } = require('./constants')
 const { simulatorPath } = require('./config')
 
+const BOOT_TIMEOUT_MS = 120000 // 2 minutes
+
 const execFileAsync = promisify(execFile)
 
 // Get iOS devices and pick iOS version first, then device
@@ -171,12 +173,23 @@ const runIOSSimulator = async (simulator) => {
       await openLegacySimulator(simulator, developerDir)
       return true
     }
-
-    await execFileAsync('xcrun', [
-      ...IOS_COMMANDS.BOOT_STATUS_SIMULATOR,
-      simulator.udid,
-      '-b',
-    ])
+   
+    try {
+      await execFileAsync(
+        'xcrun',
+        [...IOS_COMMANDS.BOOT_STATUS_SIMULATOR, simulator.udid, '-b'],
+        { timeout: BOOT_TIMEOUT_MS },
+      )
+    } catch (bootError) {
+      if (bootError.killed) {
+        throw new Error(
+          `${simulator.name} did not finish booting within ${
+            BOOT_TIMEOUT_MS / 1000
+          } seconds`,
+        )
+      }
+      throw bootError
+    }
 
     const deviceHubUrl = `${IOS_COMMANDS.DEVICE_HUB_SELECT_URL}${encodeURIComponent(
       simulator.udid,

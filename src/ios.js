@@ -1,7 +1,13 @@
 const { window } = require('vscode')
+const { execFile } = require('node:child_process')
+const { promisify } = require('node:util')
+const fs = require('node:fs')
+const path = require('node:path')
 const { runCmd } = require('./utils/commands')
 const { IOS_COMMANDS } = require('./constants')
 const { simulatorPath } = require('./config')
+
+const execFileAsync = promisify(execFile)
 
 // Get iOS devices and pick iOS version first, then device
 exports.iOSPick = async () => {
@@ -101,7 +107,11 @@ exports.iOSPick = async () => {
           },
         ]
 
-        await runIOSSimulator(simulator)
+        const started = await runIOSSimulator(simulator)
+        if (!started) {
+          quickPick.dispose()
+          return
+        }
 
         quickPick.items = [
           {
@@ -150,32 +160,64 @@ const getIOSSimulators = async () => {
 
 const runIOSSimulator = async (simulator) => {
   try {
-    let developerDir
-    const configPath = simulatorPath()
-    const xcodePath = await runCmd(IOS_COMMANDS.DEVELOPER_DIR)
+    const developerDir = (await runCmd(IOS_COMMANDS.DEVELOPER_DIR)).trim()
+    const deviceHubAppPath = path.join(
+      path.dirname(developerDir),
+      'Applications',
+      'DeviceHub.app',
+    )
 
-    if (configPath) {
-      developerDir = configPath
-    } else {
-      developerDir = xcodePath.trim() + IOS_COMMANDS.SIMULATOR_APP
+    if (!fs.existsSync(deviceHubAppPath)) {
+      await openLegacySimulator(simulator, developerDir)
+      return true
     }
 
-    if (simulator.state !== 'Booted') {
-      // If simulator isn't running, boot it up
-      await runCmd(IOS_COMMANDS.BOOT_SIMULATOR + simulator.udid)
+    await execFileAsync('xcrun', [
+      ...IOS_COMMANDS.BOOT_STATUS_SIMULATOR,
+      simulator.udid,
+      '-b',
+    ])
+
+    const deviceHubUrl = `${IOS_COMMANDS.DEVICE_HUB_SELECT_URL}${encodeURIComponent(
+      simulator.udid,
+    )}`
+    try {
+      await execFileAsync('open', ['-a', deviceHubAppPath, deviceHubUrl])
+    } catch (deviceHubError) {
+      try {
+        await openLegacySimulator(simulator, developerDir, true)
+      } catch (legacySimulatorError) {
+        throw new Error(
+          `Device Hub failed: ${deviceHubError.message}; legacy Simulator failed: ${legacySimulatorError.message}`,
+        )
+      }
     }
 
-    await runCmd(
-      'open ' + developerDir + IOS_COMMANDS.SIMULATOR_ARGS + simulator.udid
-    )
-    
-    return
-  } catch (e) {
-    window.showErrorMessage(
-      `Error running you iOS simulator! Try running this command: ${
-        'open ' + developerDir.trim() + IOS_COMMANDS.RUN_SIMULATOR + simulator
-      }`,
-    )
+    return true
+  } catch (error) {
+    window.showErrorMessage(`Error running your iOS simulator: ${error.message}`)
     return false
   }
+}
+
+const openLegacySimulator = async (
+  simulator,
+  developerDir,
+  alreadyBooted = false,
+) => {
+  if (!alreadyBooted && simulator.state !== 'Booted') {
+    await runCmd(IOS_COMMANDS.BOOT_SIMULATOR + simulator.udid)
+  }
+
+  const configuredSimulatorPath = simulatorPath()
+  const legacySimulatorPath = configuredSimulatorPath
+    ? configuredSimulatorPath
+    : path.join(developerDir, 'Applications', 'Simulator.app')
+
+  await execFileAsync('open', [
+    legacySimulatorPath,
+    '--args',
+    '-CurrentDeviceUDID',
+    simulator.udid,
+  ])
 }

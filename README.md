@@ -46,9 +46,9 @@ WSL has some limitations with the Android emulator and because of that some devi
 
 ### Xcode
 
-To run iOS emulators Xcode is required.
+To run iOS simulators Xcode is required. The extension starts the selected simulator and opens Device Hub with that device selected.
 
-If your Xcode or simulator is not installed in the default location it is possible to set the correct path of the Simulator.app file:  
+On older Xcode versions that use `Simulator.app`, you can set its path as a fallback:
 `"emulator.simulatorPath": "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"`
 
 ### Windows guide

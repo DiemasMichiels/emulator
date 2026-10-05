@@ -58,7 +58,7 @@
         "emulator.simulatorPath": {
           "type": "string",
           "default": "",
-          "description": "The absolute path of your Xcode simulator directory containing the Simulator.app script. Leaving it empty will automatically select the path with xcode-select -p."
+          "description": "The absolute path to Simulator.app, used as a fallback on older Xcode versions."
         },
         "emulator.emulatorPath": {
           "type": "string",

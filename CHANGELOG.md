@@ -1,3 +1,8 @@
+# Unreleased
+
+- Wait for the selected iOS simulator to finish booting, then open Device Hub with it selected.
+- Keep the Simulator.app fallback for older Xcode versions.
+
 # 1.8.1
 
 - Readd exec options for windows, add fallback when it fails with options - issue 66 - bug

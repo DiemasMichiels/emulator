@@ -1,7 +1,7 @@
-# Unreleased
+# 1.9.0
 
-- Wait for the selected iOS simulator to finish booting, then open Device Hub with it selected.
-- Keep the Simulator.app fallback for older Xcode versions.
+- Wait for the selected iOS simulator to finish booting, then open Device Hub with it selected - pr 70 - thanks to vnahornyi
+- Keep the Simulator.app fallback for older Xcode versions
 
 # 1.8.1
 
